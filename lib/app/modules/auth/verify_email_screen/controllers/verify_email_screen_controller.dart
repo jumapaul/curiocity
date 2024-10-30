@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class VerifyEmailScreenController extends GetxController {
-
-  TextEditingController confirmCodeController = TextEditingController();
+  var confirmCodeController = TextEditingController();
   late Timer _timer;
   RxInt start = 59.obs;
 
@@ -20,11 +19,12 @@ class VerifyEmailScreenController extends GetxController {
     });
   }
 
-  @override void dispose() {
+  @override
+  void dispose() {
     _timer.cancel();
     super.dispose();
-
   }
+
   @override
   void onInit() {
     startTimer();

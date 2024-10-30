@@ -31,7 +31,7 @@ class OnBoardScreenController extends GetxController {
 
   final List<OnBoardModel> pages = [
     OnBoardModel(
-        description: "Discover.Explore.Anything.Anywhere.Anytime",
+        description: "Discover.Explore.Anything. Anywhere.Anytime",
         image: 'assets/images/splash_one.gif'),
     OnBoardModel(
         description: "Discover spaces and curios around you",

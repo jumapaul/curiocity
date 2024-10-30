@@ -1,8 +1,9 @@
+import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../common_widgets/outlined_button_widget.dart';
+import '../../../../common/widget/outlined_button.dart';
 import '../../login_screen/views/widget/InputTextFieldWidget.dart';
 import '../controllers/verify_email_screen_controller.dart';
 
@@ -11,12 +12,12 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(VerifyEmailScreenController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Back"),
+        centerTitle: false,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: mediumSize),
           child: GestureDetector(
             onTap: () {
               Get.back();
@@ -29,47 +30,50 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
         ),
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Obx(() {
+        padding: const EdgeInsets.symmetric(horizontal: mediumSize),
+        child: Obx(
+          () {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: mediumSize,
                 ),
                 const Text(
                   "Verify",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 35),
+                    fontWeight: FontWeight.bold,
+                    fontSize: largeSize,
+                  ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 100,
                 ),
                 const Text(
                   "We sent an email verification code to your email",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    fontSize: normalSize,
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: extraExtraLargeSize,
                 ),
                 InputTextFieldWidget(
-                    hintText: "Type your code here",
-                    editingController: controller.confirmCodeController),
+                  hintText: "Type your code here",
+                  editingController: controller.confirmCodeController,
+                ),
                 const SizedBox(
-                  height: 30,
+                  height: extraExtraLargeSize,
                 ),
                 OutlinedButtonWidget(
-                    onClick: () {
-                      //todo
-                    },
-                    name: "Verify"),
+                  onClick: () {
+                    //todo
+                  },
+                  name: "Verify",
+                ),
                 const SizedBox(
-                  height: 20,
+                  height: mediumSize,
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -78,15 +82,20 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
                       Text(
                           "00:${controller.start.value.toString().padLeft(2, '0')}"),
                       const SizedBox(
-                        height: 10,
+                        height: mediumSize,
                       ),
-                      const Text("Resend code")
+                      const Text(
+                        "Resend code",
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      )
                     ],
                   ),
                 )
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

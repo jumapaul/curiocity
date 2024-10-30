@@ -16,14 +16,21 @@ class SignInAndUpRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(desc),
-        TextButton(
-            onPressed: onClick,
-            child: Text(
-              action,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.blue),
-            ))
+        Text(
+          desc,
+          style: const TextStyle(fontSize: 12),
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        GestureDetector(
+          onTap: onClick,
+          child: Text(
+            action,
+            style: const TextStyle(
+                color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 12),
+          ),
+        ),
       ],
     );
   }

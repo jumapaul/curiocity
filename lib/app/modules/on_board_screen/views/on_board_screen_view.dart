@@ -1,4 +1,5 @@
-import 'package:curiocity/app/modules/common_widgets/outlined_button_widget.dart';
+import 'package:curiocity/app/common/widget/outlined_button.dart';
+import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class OnBoardScreenView extends GetView<OnBoardScreenController> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+          padding: const EdgeInsets.only(left: 31, right: 31, bottom: 40),
           child: Column(
             children: [
               Expanded(
@@ -41,10 +42,11 @@ class OnBoardScreenView extends GetView<OnBoardScreenController> {
                 height: 30,
               ),
               OutlinedButtonWidget(
-                  onClick: () {
-                    Get.to(const LoginScreenView());
-                  },
-                  name: "Login"),
+                onClick: () {
+                  Get.toNamed(Routes.LOGIN_SCREEN);
+                },
+                name: "Login",
+              ),
               const SizedBox(
                 height: 40,
               ),
@@ -55,15 +57,30 @@ class OnBoardScreenView extends GetView<OnBoardScreenController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/images/facebook.png"),
-                  const SizedBox(
-                    width: 20,
+                  Image.asset(
+                    "assets/images/facebook.png",
+                    height: 30,
+                    width: 30,
                   ),
-                  Image.asset("assets/images/google.png"),
                   const SizedBox(
-                    width: 20,
+                    width: 30,
                   ),
-                  Image.asset("assets/images/apple-logo.png"),
+                  Image.asset(
+                    "assets/images/google.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Image.asset(
+                    "assets/images/apple-logo.png",
+                    height: 30,
+                    width: 30,
+                    color: Get.theme.brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
                 ],
               )
             ],
@@ -89,8 +106,8 @@ class OnBoardContent extends StatelessWidget {
           height: 100,
         ),
         SizedBox(
-          height: 200,
-          width: 200,
+          height: 213,
+          width: 145,
           child: Image.asset(
             image,
             fit: BoxFit.contain,
@@ -100,7 +117,7 @@ class OnBoardContent extends StatelessWidget {
         Text(
           description,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
         )
       ],
     );

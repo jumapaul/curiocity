@@ -13,20 +13,21 @@ class OutlinedButtonWidget extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.orangeAccent,
-            side: const BorderSide(color: Colors.orangeAccent),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))),
+          backgroundColor: Colors.orangeAccent,
+          side: const BorderSide(color: Colors.orangeAccent),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
         onPressed: onClick,
         child: Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15),
-            child: Text(
-                name,
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          child: Text(
+            name,
             style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),
-            )),
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+          ),
+        ),
       ),
     );
   }
