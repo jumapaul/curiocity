@@ -88,13 +88,12 @@ class UserCategoryPreferenceView
         border: Border.all(
           color: Get.theme.brightness == Brightness.dark
               ? Colors.white70
-              : Colors.black87,
+              : Colors.black26,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(mediumSize),
       ),
       child: ListTile(
-        leading: Icon(category.icon),
         title: Text(category.title),
         trailing: Checkbox(
           value: category.selected,
