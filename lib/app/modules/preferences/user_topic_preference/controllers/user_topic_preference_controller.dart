@@ -7,17 +7,16 @@ class UserTopicPreferenceController extends GetxController {
     "Food",
     "Entertainment",
     "Architecture",
-    "Arts",
-    "Culture",
-    "Education",
-    "Learning",
+    "Arts & Culture",
+    "Education & Learning",
     "Events & Festivals",
     "Adventure",
     "Parks & Gardens",
     "Fitness",
-    "Sports",
-    "Recreation",
+    "Sports & Recreation",
     "Wellness & SelfCare",
+    "Technology & Innovation",
+    "Volunteering & charity"
   ]);
 
   @override

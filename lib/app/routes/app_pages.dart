@@ -1,7 +1,3 @@
-import 'package:curiocity/app/modules/preferences/user_category_preference/bindings/user_category_preference_binding.dart';
-import 'package:curiocity/app/modules/preferences/user_category_preference/views/user_category_preference_view.dart';
-import 'package:curiocity/app/modules/preferences/user_topic_preference/bindings/user_topic_preference_binding.dart';
-import 'package:curiocity/app/modules/preferences/user_topic_preference/views/user_topic_preference_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/auth/forgot_password/bindings/forgot_password_binding.dart';
@@ -20,6 +16,14 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/on_board_screen/bindings/on_board_screen_binding.dart';
 import '../modules/on_board_screen/views/on_board_screen_view.dart';
+import '../modules/preferences/preference_notification/bindings/preference_notification_binding.dart';
+import '../modules/preferences/preference_notification/views/preference_notification_view.dart';
+import '../modules/preferences/user_category_preference/bindings/user_category_preference_binding.dart';
+import '../modules/preferences/user_category_preference/views/user_category_preference_view.dart';
+import '../modules/preferences/user_topic_preference/bindings/user_topic_preference_binding.dart';
+import '../modules/preferences/user_topic_preference/views/user_topic_preference_view.dart';
+import '../modules/setting_up_profile/bindings/setting_up_profile_binding.dart';
+import '../modules/setting_up_profile/views/setting_up_profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -78,6 +82,16 @@ class AppPages {
       name: _Paths.USER_TOPIC_PREFERENCE,
       page: () => const UserTopicPreferenceView(),
       binding: UserTopicPreferenceBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING_UP_PROFILE,
+      page: () => const SettingUpProfileView(),
+      binding: SettingUpProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PREFERENCE_NOTIFICATION,
+      page: () => const PreferenceNotificationView(),
+      binding: PreferenceNotificationBinding(),
     ),
   ];
 }

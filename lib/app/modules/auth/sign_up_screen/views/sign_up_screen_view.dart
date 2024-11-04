@@ -48,21 +48,25 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
                 const SizedBox(height: mediumSize),
                 InputTextFieldWidget(
                   hintText: "Input Full Name",
+                  labelText: "Fullname",
                   editingController: controller.fullNameController,
                 ),
                 const SizedBox(height: mediumSize),
                 InputTextFieldWidget(
                   hintText: "Input Email Address",
+                  labelText: "Email address",
                   editingController: controller.emailAddressController,
                 ),
                 const SizedBox(height: mediumSize),
                 PasswordTextFieldWidget(
                   hintText: "Input Password",
+                  labelText: "Password",
                   passwordTextEditController: controller.passwordController,
                 ),
                 const SizedBox(height: mediumSize),
                 PasswordTextFieldWidget(
                   hintText: "Confirm Password",
+                  labelText: "Confirm password",
                   passwordTextEditController:
                       controller.confirmPasswordController,
                 ),

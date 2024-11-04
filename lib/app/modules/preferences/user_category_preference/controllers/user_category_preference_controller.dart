@@ -30,6 +30,16 @@ class UserCategoryPreferenceController extends GetxController {
           icon: Icons.copy_sharp, title: "Nature & Outdoors", selected: false),
       Category(
           icon: Icons.copy_sharp, title: "Social Community", selected: false),
+      Category(
+          icon: Icons.copy_sharp,
+          title: "Technology & Innovation",
+          selected: false),
+      Category(
+          icon: Icons.copy_sharp, title: "Family-Friendly", selected: false),
+      Category(
+          icon: Icons.copy_sharp,
+          title: "Sports & Recreation",
+          selected: false),
     ]);
   }
 }

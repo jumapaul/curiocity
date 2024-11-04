@@ -61,6 +61,7 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
                 ),
                 InputTextFieldWidget(
                   hintText: "Type your code here",
+                  labelText: "Enter code",
                   editingController: controller.confirmCodeController,
                 ),
                 const SizedBox(

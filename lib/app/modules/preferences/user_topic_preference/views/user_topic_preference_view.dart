@@ -9,16 +9,6 @@ import '../controllers/user_topic_preference_controller.dart';
 class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
   const UserTopicPreferenceView({super.key});
 
-  static const headerStyle = TextStyle(
-    fontSize: extraLargeSize,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const subHeaderStyle = TextStyle(
-    fontSize: normalSize,
-    fontWeight: FontWeight.w500,
-  );
-
   static var chipTextStyle = TextStyle(
     fontSize: 14,
     color: Get.theme.brightness == Brightness.dark
@@ -38,14 +28,15 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: largeSize),
-              const Text("What is most important to you?", style: headerStyle),
+              const Text("What is most important to you?",
+                  style: AppTextStyles.headerStyle),
               const SizedBox(height: mediumSize),
               buildSubHeader(),
               const SizedBox(height: largeSize),
               Expanded(child: buildTopicsGrid()),
               OutlinedButtonWidget(
                 onClick: () {
-                  Get.toNamed(Routes.USER_TOPIC_PREFERENCE);
+                  Get.toNamed(Routes.SETTING_UP_PROFILE);
                 },
                 name: "Continue",
               ),
@@ -57,7 +48,8 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
   }
 
   Widget buildSubHeader() {
-    return const Text("Select 5 or more to continue", style: subHeaderStyle);
+    return const Text("Select 5 or more to continue",
+        style: AppTextStyles.subHeaderStyle);
   }
 
   Widget buildTopicsGrid() {

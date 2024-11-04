@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class InputTextFieldWidget extends StatefulWidget {
   final String hintText;
+  final String? labelText;
+  final TextInputType? inputType;
   final TextEditingController editingController;
 
   const InputTextFieldWidget(
-      {super.key, required this.hintText, required this.editingController});
+      {super.key, required this.hintText, required this.editingController, this.labelText, this.inputType});
 
   @override
   State<InputTextFieldWidget> createState() => _InputTextFieldWidgetState();
@@ -15,6 +17,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: widget.inputType,
       controller: widget.editingController,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -24,6 +27,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.black, width: 1)),
         hintText: widget.hintText,
+        labelText: widget.labelText
       ),
     );
   }
@@ -31,12 +35,13 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
 
 class PasswordTextFieldWidget extends StatefulWidget {
   final String hintText;
+  final String labelText;
   final TextEditingController passwordTextEditController;
 
   const PasswordTextFieldWidget(
       {super.key,
       required this.hintText,
-      required this.passwordTextEditController});
+      required this.passwordTextEditController, required this.labelText});
 
   @override
   State<PasswordTextFieldWidget> createState() =>
@@ -65,6 +70,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.black, width: 1)),
           hintText: widget.hintText,
+          labelText: widget.labelText,
           suffixIcon: IconButton(
               onPressed: () {
                 _toggleVisibility();

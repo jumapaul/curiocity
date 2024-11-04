@@ -35,11 +35,13 @@ class LoginScreenView extends GetView<LoginScreenController> {
                 const SizedBox(height: mediumSize),
                 InputTextFieldWidget(
                   hintText: 'Email Address',
+                  labelText: "Email address",
                   editingController: controller.emailAddressController,
                 ),
                 const SizedBox(height: mediumSize),
                 PasswordTextFieldWidget(
                   hintText: "Password",
+                  labelText: "Password",
                   passwordTextEditController: controller.passwordController,
                 ),
                 const SizedBox(height: mediumSize),

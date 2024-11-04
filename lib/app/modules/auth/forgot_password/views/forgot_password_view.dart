@@ -65,6 +65,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
             ),
             InputTextFieldWidget(
               hintText: "Type your email here",
+              labelText: "Email",
               editingController: controller.emailController,
             ),
             const SizedBox(

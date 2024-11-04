@@ -14,6 +14,8 @@ abstract class Routes {
   static const SEND_PASSWORD_RESET = _Paths.SEND_PASSWORD_RESET;
   static const USER_CATEGORY_PREFERENCE = _Paths.USER_CATEGORY_PREFERENCE;
   static const USER_TOPIC_PREFERENCE = _Paths.USER_TOPIC_PREFERENCE;
+  static const SETTING_UP_PROFILE = _Paths.SETTING_UP_PROFILE;
+  static const PREFERENCE_NOTIFICATION = _Paths.PREFERENCE_NOTIFICATION;
 }
 
 abstract class _Paths {
@@ -29,4 +31,6 @@ abstract class _Paths {
   static const SEND_PASSWORD_RESET = '/send-password-reset';
   static const USER_CATEGORY_PREFERENCE = '/user-category-preference';
   static const USER_TOPIC_PREFERENCE = '/user-topic-preference';
+  static const SETTING_UP_PROFILE = '/setting-up-profile';
+  static const PREFERENCE_NOTIFICATION = '/preference-notification';
 }
