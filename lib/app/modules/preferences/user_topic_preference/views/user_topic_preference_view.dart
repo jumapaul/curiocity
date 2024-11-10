@@ -92,14 +92,16 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
         child: Chip(
           label: Text(
             topic.name ?? '',
-            style: AppTextStyles.chipTextStyle,
+            style: isSelected
+                ? AppTextStyles.selectedChipTextStyle
+                : AppTextStyles.chipTextStyle,
           ),
           backgroundColor: isSelected
               ? chipBackgroundColor
               : Theme.of(Get.context!).colorScheme.surface,
           side: BorderSide(
-            color: Theme.of(Get.context!).colorScheme.inverseSurface,
-          ),
+              color: Theme.of(Get.context!).colorScheme.inverseSurface,
+              width: 0.5),
           padding: const EdgeInsets.symmetric(horizontal: 4),
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: RoundedRectangleBorder(

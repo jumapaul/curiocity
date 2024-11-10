@@ -14,9 +14,13 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static const chipTextStyle = const TextStyle(
+  static const chipTextStyle = TextStyle(
     fontSize: 14,
-    color: Colors.white,
+  );
+
+  static const selectedChipTextStyle = TextStyle(
+    fontSize: 14,
+    color: Colors.white
   );
 
   static const subHeaderStyle = TextStyle(

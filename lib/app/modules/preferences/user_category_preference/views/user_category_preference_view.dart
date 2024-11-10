@@ -122,7 +122,7 @@ class UserCategoryPreferenceView
               if (states.contains(WidgetState.selected)) {
                 return Colors.orange;
               }
-              return Colors.grey;
+              return Theme.of(Get.context!).colorScheme.surface;
             }),
             value: controller.selectedCategories.contains(category),
             onChanged: (checked) {
