@@ -26,17 +26,10 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       keyboardType: widget.inputType,
       controller: widget.editingController,
       decoration: InputDecoration(
-          errorText: widget.errorText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.inverseSurface, width: 1),
-          ),
-          hintText: widget.hintText,
-          labelText: widget.labelText),
+        errorText: widget.errorText,
+        hintText: widget.hintText,
+        labelText: widget.labelText,
+      ),
       maxLines: 4,
       minLines: 1,
     );

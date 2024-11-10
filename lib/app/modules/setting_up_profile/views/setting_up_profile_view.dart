@@ -1,6 +1,7 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
 import 'package:curiocity/app/modules/auth/login_screen/views/widget/InputTextFieldWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -51,6 +52,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
                         inputType: TextInputType.datetime,
                         hintText: "Enter Date of Birth",
                         labelText: "Date of birth",
+                        isDateField: true,
                         controller: controller.mobileNumberEditController,
                       ),
                       AppTextStyles.mediumVerticalSpacing,
@@ -83,7 +85,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
               height: 100,
               width: 100,
             ),
-            Positioned(
+            const Positioned(
               bottom: 0,
               right: 0,
               child: CircleAvatar(
@@ -114,14 +116,48 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
     required String hintText,
     required TextEditingController controller,
     required String labelText,
+    bool isDateField = false,
     TextInputType inputType = TextInputType.text,
   }) {
-    return InputTextFieldWidget(
-      hintText: hintText,
-      editingController: controller,
-      labelText: labelText,
-      inputType: inputType,
-    );
+    return isDateField
+        ? GestureDetector(
+            onTap: () {
+              _showDatePicker(Get.context!, controller);
+            },
+            child: TextField(
+              keyboardType: TextInputType.datetime,
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: hintText,
+                labelText: labelText,
+              ),
+              enabled: false,
+            ),
+          )
+        : InputTextFieldWidget(
+            hintText: hintText,
+            editingController: controller,
+            labelText: labelText,
+            inputType: inputType,
+          );
+  }
+
+  void _showDatePicker(BuildContext context, TextEditingController controller) {
+    DateTime initialDateTime = controller.text.isNotEmpty
+        ? DateTime.tryParse(controller.text) ?? DateTime.now()
+        : DateTime.now();
+
+    showDatePicker(
+      context: context,
+      initialDate: initialDateTime,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        controller.text =
+            '${pickedDate.toLocal()}'.split(' ')[0]; // Format as 'YYYY-MM-DD'
+      }
+    });
   }
 
   Widget _buildPhoneField() {

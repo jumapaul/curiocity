@@ -30,7 +30,7 @@ void main() async {
         ),
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: const TextStyle(
-            color: Colors.black87, // Set the label color globally
+            color: Colors.black87,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -38,6 +38,29 @@ void main() async {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.black87, width: 1),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.red, width: 1),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black87, width: 1),
+          ),
+        ),
+        datePickerTheme: DatePickerThemeData(
+          todayBackgroundColor: WidgetStateProperty.all(Colors.orange),
+          dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return Colors.orange;
+            }
+            return null;
+          }),
+          cancelButtonStyle: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(Colors.red),
+          ),
+          confirmButtonStyle: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(Colors.orange),
           ),
         ),
       ),
@@ -61,6 +84,29 @@ void main() async {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.white70, width: 1),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.red, width: 1),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white70, width: 1),
+          ),
+        ),
+        datePickerTheme: DatePickerThemeData(
+          todayBackgroundColor: WidgetStateProperty.all(Colors.orange),
+          dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return Colors.orange;
+            }
+            return null;
+          }),
+          cancelButtonStyle: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(Colors.red),
+          ),
+          confirmButtonStyle: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(Colors.orange),
           ),
         ),
       ),
