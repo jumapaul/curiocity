@@ -1,10 +1,8 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
+import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import '../../../../common/widget/outlined_button.dart';
-import '../../login_screen/views/widget/InputTextFieldWidget.dart';
+import 'package:pinput/pinput.dart';
 import '../controllers/verify_email_screen_controller.dart';
 
 class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
@@ -33,6 +31,7 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
         padding: const EdgeInsets.symmetric(horizontal: mediumSize),
         child: Obx(
           () {
+            final currentEmail = ModalRoute.of(context)?.settings.arguments;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,9 +48,9 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
                 const SizedBox(
                   height: 100,
                 ),
-                const Text(
-                  "We sent an email verification code to your email",
-                  style: TextStyle(
+                Text(
+                  "We sent an email verification code to $currentEmail",
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: normalSize,
                   ),
@@ -59,20 +58,7 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
                 const SizedBox(
                   height: extraExtraLargeSize,
                 ),
-                InputTextFieldWidget(
-                  hintText: "Type your code here",
-                  labelText: "Enter code",
-                  editingController: controller.confirmCodeController,
-                ),
-                const SizedBox(
-                  height: extraExtraLargeSize,
-                ),
-                OutlinedButtonWidget(
-                  onClick: () {
-                    //todo
-                  },
-                  name: "Verify",
-                ),
+                _verifyOtpWidget(),
                 const SizedBox(
                   height: mediumSize,
                 ),
@@ -85,10 +71,22 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
                       const SizedBox(
                         height: mediumSize,
                       ),
-                      const Text(
-                        "Resend code",
-                        style: TextStyle(fontWeight: FontWeight.w400),
-                      )
+                      TextButton(
+                          onPressed: () {
+                            if (controller.start != 0) {
+                              showToast("Try after ${controller.start.value}");
+                            } else {
+                              controller.resetTimer();
+                              //todo
+                            }
+                          },
+                          child: Text("Resend Otp",
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color,
+                              )))
                     ],
                   ),
                 )
@@ -97,6 +95,27 @@ class VerifyEmailScreenView extends GetView<VerifyEmailScreenController> {
           },
         ),
       ),
+    );
+  }
+
+  Widget _verifyOtpWidget() {
+    final defaultTheme = PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: const TextStyle(color: Colors.black),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.black)));
+    return Pinput(
+      length: 6,
+      defaultPinTheme: defaultTheme,
+      focusedPinTheme: defaultTheme.copyWith(
+          decoration: defaultTheme.decoration!
+              .copyWith(border: Border.all(color: Colors.orangeAccent))),
+      onCompleted: (otp) {
+        controller.verifyEmail(otp);
+      },
     );
   }
 }

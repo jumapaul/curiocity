@@ -16,6 +16,7 @@ abstract class Routes {
   static const USER_TOPIC_PREFERENCE = _Paths.USER_TOPIC_PREFERENCE;
   static const SETTING_UP_PROFILE = _Paths.SETTING_UP_PROFILE;
   static const PREFERENCE_NOTIFICATION = _Paths.PREFERENCE_NOTIFICATION;
+  static const RESET_PASSWORD_SCREEN = _Paths.RESET_PASSWORD_SCREEN;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const USER_TOPIC_PREFERENCE = '/user-topic-preference';
   static const SETTING_UP_PROFILE = '/setting-up-profile';
   static const PREFERENCE_NOTIFICATION = '/preference-notification';
+  static const RESET_PASSWORD_SCREEN = '/reset-password-screen';
 }

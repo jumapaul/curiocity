@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class OutlinedButtonWidget extends StatelessWidget {
   final VoidCallback onClick;
-  final String name;
+  final Widget? child;
+  final String? name;
 
   const OutlinedButtonWidget(
-      {super.key, required this.onClick, required this.name});
+      {super.key, required this.onClick, required this.name, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +23,14 @@ class OutlinedButtonWidget extends StatelessWidget {
         onPressed: onClick,
         child: Padding(
           padding: const EdgeInsets.only(top: 15, bottom: 15),
-          child: Text(
-            name,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
-          ),
+          child: child ??
+              Text(
+                name!,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 16),
+              ),
         ),
       ),
     );

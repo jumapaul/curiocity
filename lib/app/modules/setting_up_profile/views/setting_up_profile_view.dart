@@ -1,11 +1,11 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
-import 'package:curiocity/app/common/widget/outlined_button.dart';
 import 'package:curiocity/app/modules/auth/login_screen/views/widget/InputTextFieldWidget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../common_widget/outlined_button.dart';
 import '../controllers/setting_up_profile_controller.dart';
 
 class SettingUpProfileView extends GetView<SettingUpProfileController> {

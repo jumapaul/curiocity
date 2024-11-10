@@ -1,10 +1,10 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
-import 'package:curiocity/app/common/widget/outlined_button.dart';
 import 'package:curiocity/app/modules/preferences/preference_notification/model/permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../routes/app_pages.dart';
+import '../../../common_widget/outlined_button.dart';
 import '../controllers/preference_notification_controller.dart';
 
 class PreferenceNotificationView

@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class VerifyEmailScreenController extends GetxController {
-  var confirmCodeController = TextEditingController();
+class ResetPasswordScreenController extends GetxController {
+
   late Timer _timer;
   RxInt start = 59.obs;
 
@@ -19,25 +18,19 @@ class VerifyEmailScreenController extends GetxController {
     });
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
+  void resetTimer() {
+    start.value = 59;
+    startTimer();
   }
-
   @override
   void onInit() {
     startTimer();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  @override void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

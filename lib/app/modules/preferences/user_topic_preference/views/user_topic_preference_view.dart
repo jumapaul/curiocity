@@ -1,9 +1,9 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
-import 'package:curiocity/app/common/widget/outlined_button.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../common_widget/outlined_button.dart';
 import '../controllers/user_topic_preference_controller.dart';
 
 class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {

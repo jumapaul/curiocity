@@ -1,9 +1,9 @@
-import 'package:curiocity/app/common/widget/outlined_button.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import '../../auth/login_screen/views/login_screen_view.dart';
+import '../../common_widget/outlined_button.dart';
 import '../controllers/on_board_screen_controller.dart';
 
 class OnBoardScreenView extends GetView<OnBoardScreenController> {
@@ -43,6 +43,7 @@ class OnBoardScreenView extends GetView<OnBoardScreenController> {
               ),
               OutlinedButtonWidget(
                 onClick: () {
+                  controller.saveOnBoardState(true);
                   Get.toNamed(Routes.LOGIN_SCREEN);
                 },
                 name: "Login",

@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class InputTextFieldWidget extends StatefulWidget {
   final String hintText;
   final String? labelText;
+  final String? errorText;
   final TextInputType? inputType;
   final TextEditingController editingController;
 
   const InputTextFieldWidget(
-      {super.key, required this.hintText, required this.editingController, this.labelText, this.inputType});
+      {super.key,
+      required this.hintText,
+      required this.editingController,
+      this.labelText,
+      this.inputType,
+      this.errorText});
 
   @override
   State<InputTextFieldWidget> createState() => _InputTextFieldWidgetState();
@@ -20,15 +26,15 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       keyboardType: widget.inputType,
       controller: widget.editingController,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
+          errorText: widget.errorText,
+          border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.black, width: 1)),
-        hintText: widget.hintText,
-        labelText: widget.labelText
-      ),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.black, width: 1)),
+          hintText: widget.hintText,
+          labelText: widget.labelText),
     );
   }
 }
@@ -36,12 +42,14 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
 class PasswordTextFieldWidget extends StatefulWidget {
   final String hintText;
   final String labelText;
+  final String? errorText;
   final TextEditingController passwordTextEditController;
 
   const PasswordTextFieldWidget(
       {super.key,
       required this.hintText,
-      required this.passwordTextEditController, required this.labelText});
+      required this.passwordTextEditController,
+      required this.labelText, this.errorText});
 
   @override
   State<PasswordTextFieldWidget> createState() =>
@@ -71,6 +79,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
               borderSide: const BorderSide(color: Colors.black, width: 1)),
           hintText: widget.hintText,
           labelText: widget.labelText,
+          errorText: widget.errorText,
           suffixIcon: IconButton(
               onPressed: () {
                 _toggleVisibility();
