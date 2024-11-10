@@ -1,3 +1,4 @@
+import 'package:curiocity/app/data/providers/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
@@ -5,6 +6,8 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initialRoute = await AppPages.getInitialRoute();
+  Get.put(ApiProvider());
+
   runApp(
     GetMaterialApp(
       title: "Curios",
@@ -25,6 +28,18 @@ void main() async {
             fontSize: 16,
           ),
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: const TextStyle(
+            color: Colors.black87, // Set the label color globally
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.black87, width: 1),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -34,6 +49,18 @@ void main() async {
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: const TextStyle(
+            color: Colors.white70, // Set the label color globally
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white70, width: 1),
           ),
         ),
       ),

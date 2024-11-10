@@ -26,53 +26,49 @@ class PreferenceNotificationView
           subTitle: "Let us use your data to personalize your content ")
     ];
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Back'),
-          leading: GestureDetector(
-            onTap: (){
-              Get.back();
-            },
-              child: const Icon(Icons.arrow_back_ios)),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Preferences",
-                style: AppTextStyles.headerStyle,
-              ),
-              AppTextStyles.smallVerticalSpacing,
-              const Text("Adjust your preferences"),
-              AppTextStyles.largeVerticalSpacing,
-              Flexible(
-                flex: 8,
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      var singlePermission = permissions[index];
+      appBar: AppBar(
+        title: const Text('Back'),
+        centerTitle: false,
+        automaticallyImplyLeading: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Preferences",
+              style: AppTextStyles.headerStyle,
+            ),
+            AppTextStyles.smallVerticalSpacing,
+            const Text("Adjust your preferences"),
+            AppTextStyles.largeVerticalSpacing,
+            Flexible(
+              flex: 8,
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    var singlePermission = permissions[index];
 
-                      return NotificationPermissions(
-                        title: singlePermission.title,
-                        subTitle: singlePermission.subTitle,
-                      );
-                    },
-                    separatorBuilder: (context, child) {
-                      return AppTextStyles.largeVerticalSpacing;
-                    },
-                    itemCount: permissions.length),
-              ),
-
-              const Spacer(),
-
-              OutlinedButtonWidget(
-                  onClick: (){
-                    Get.toNamed(Routes.HOME);
+                    return NotificationPermissions(
+                      title: singlePermission.title,
+                      subTitle: singlePermission.subTitle,
+                    );
                   },
-                  name: "Continue")
-            ],
-          ),
-        ));
+                  separatorBuilder: (context, child) {
+                    return AppTextStyles.largeVerticalSpacing;
+                  },
+                  itemCount: permissions.length),
+            ),
+            const Spacer(),
+            OutlinedButtonWidget(
+                onClick: () {
+                  Get.toNamed(Routes.SETTING_UP_PROFILE);
+                },
+                name: "Continue")
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -100,26 +96,25 @@ class _NotificationPermissionsState extends State<NotificationPermissions> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.title,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold
-      ),
+      title: Text(
+        widget.title,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text(widget.subTitle),
       trailing: Switch(
-        trackOutlineColor: MaterialStateProperty.resolveWith(
-            (final Set<MaterialState> states){
-              if(states.contains(MaterialState.selected)){
-                return null;
-              }
-              return Colors.grey.shade300;
+          trackOutlineColor: MaterialStateProperty.resolveWith(
+              (final Set<MaterialState> states) {
+            if (states.contains(MaterialState.selected)) {
+              return null;
             }
-        ),
-        activeTrackColor: colorPrimary,
+            return Colors.grey.shade300;
+          }),
+          activeTrackColor: colorPrimary,
           inactiveTrackColor: Colors.grey.shade300,
           inactiveThumbColor: Colors.white,
           activeColor: Colors.white,
-          value: isSelected, onChanged: toggleSwitch),
+          value: isSelected,
+          onChanged: toggleSwitch),
     );
   }
 }

@@ -1,13 +1,23 @@
-import 'package:curiocity/app/modules/preferences/user_category_preference/model/category.dart';
-import 'package:flutter/material.dart';
+import 'package:curiocity/app/data/model/topics_response.dart';
+import 'package:curiocity/app/data/providers/api_provider.dart';
 import 'package:get/get.dart';
 
 class UserCategoryPreferenceController extends GetxController {
-  var categories = RxList<Category>();
+  final ApiProvider apiProvider = Get.find<ApiProvider>();
+  var topics = Rxn<TopicsResponse>();
+  var selectedCategories = RxList<CurioCategory>();
+
+  void getCategory() async {
+    final topicsResponse = await apiProvider.getData<TopicsResponse>(
+      'category',
+      (json) => TopicsResponse.fromJson(json),
+    );
+    topics.value = topicsResponse;
+  }
 
   @override
   void onInit() {
-    createDummyCategory();
+    getCategory();
     super.onInit();
   }
 
@@ -19,27 +29,5 @@ class UserCategoryPreferenceController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-  }
-
-  void createDummyCategory() {
-    categories.addAll([
-      Category(icon: Icons.copy_sharp, title: "Lifestyle", selected: false),
-      Category(
-          icon: Icons.copy_sharp, title: "Culture & Heritage", selected: false),
-      Category(
-          icon: Icons.copy_sharp, title: "Nature & Outdoors", selected: false),
-      Category(
-          icon: Icons.copy_sharp, title: "Social Community", selected: false),
-      Category(
-          icon: Icons.copy_sharp,
-          title: "Technology & Innovation",
-          selected: false),
-      Category(
-          icon: Icons.copy_sharp, title: "Family-Friendly", selected: false),
-      Category(
-          icon: Icons.copy_sharp,
-          title: "Sports & Recreation",
-          selected: false),
-    ]);
   }
 }
