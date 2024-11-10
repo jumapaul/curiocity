@@ -74,41 +74,64 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
   }
 
   Widget _profileView() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            Image.asset(
-              "assets/images/profile.png",
-              height: 100,
-              width: 100,
-            ),
-            const Positioned(
-              bottom: 0,
-              right: 0,
-              child: CircleAvatar(
-                radius: 14,
-                backgroundColor: colorPrimary,
-                child: Icon(
-                  Icons.edit,
-                  size: 16,
-                  color: Colors.white,
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              ClipOval(
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[200], // Optional background color
+                  ),
+                  child: controller.image.value != null
+                      ? Image.file(
+                          controller.image.value!,
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover, // Add fit property
+                        )
+                      : Image.asset(
+                          "assets/images/profile.png",
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover, // Add fit property
+                        ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: smallSize),
-        const Text(
-          "John Doe",
-          style: AppTextStyles.subHeaderStyle,
-        ),
-        const Text(
-          "@John_Doe",
-        ),
-      ],
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: _showImagePickerOptions,
+                  child: const CircleAvatar(
+                    radius: 14,
+                    backgroundColor: colorPrimary,
+                    child: Icon(
+                      Icons.edit,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: smallSize),
+          const Text(
+            "John Doe",
+            style: AppTextStyles.subHeaderStyle,
+          ),
+          const Text(
+            "@John_Doe",
+          ),
+        ],
+      ),
     );
   }
 
@@ -188,6 +211,36 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
         Get.toNamed(Routes.PREFERENCE_NOTIFICATION);
       },
       name: "Continue",
+    );
+  }
+
+  void _showImagePickerOptions() {
+    showModalBottomSheet(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
+                onTap: () {
+                  Get.back();
+                  controller.pickImage();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
+                onTap: () {
+                  Get.back();
+                  controller.takePhoto();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
