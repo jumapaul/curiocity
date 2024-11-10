@@ -208,7 +208,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
   Widget _buildContinueButton() {
     return OutlinedButtonWidget(
       onClick: () {
-        Get.toNamed(Routes.PREFERENCE_NOTIFICATION);
+        Get.toNamed(Routes.HOME);
       },
       name: "Continue",
     );
