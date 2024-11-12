@@ -26,15 +26,12 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       keyboardType: widget.inputType,
       controller: widget.editingController,
       decoration: InputDecoration(
-          errorText: widget.errorText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.black, width: 1)),
-          hintText: widget.hintText,
-          labelText: widget.labelText),
+        errorText: widget.errorText,
+        hintText: widget.hintText,
+        labelText: widget.labelText,
+      ),
+      maxLines: 4,
+      minLines: 1,
     );
   }
 }
@@ -49,7 +46,8 @@ class PasswordTextFieldWidget extends StatefulWidget {
       {super.key,
       required this.hintText,
       required this.passwordTextEditController,
-      required this.labelText, this.errorText});
+      required this.labelText,
+      this.errorText});
 
   @override
   State<PasswordTextFieldWidget> createState() =>
@@ -71,30 +69,24 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       obscureText: !showPassword,
       controller: widget.passwordTextEditController,
       decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.black, width: 1)),
-          hintText: widget.hintText,
-          labelText: widget.labelText,
-          errorText: widget.errorText,
-          suffixIcon: IconButton(
-              onPressed: () {
-                _toggleVisibility();
-              },
-              icon: showPassword
-                  ? const Icon(
-                      size: 15,
-                      Icons.visibility,
-                      color: Colors.black,
-                    )
-                  : const Icon(
-                      size: 15,
-                      Icons.visibility_off,
-                      color: Colors.black,
-                    ))),
+        hintText: widget.hintText,
+        labelText: widget.labelText,
+        errorText: widget.errorText,
+        suffixIcon: IconButton(
+          onPressed: () {
+            _toggleVisibility();
+          },
+          icon: showPassword
+              ? const Icon(
+                  size: 15,
+                  Icons.visibility,
+                )
+              : const Icon(
+                  size: 15,
+                  Icons.visibility_off,
+                ),
+        ),
+      ),
     );
   }
 }

@@ -8,10 +8,19 @@ const largeSize = 24.0;
 const extraLargeSize = 30.0;
 const extraExtraLargeSize = 40.0;
 
-class AppTextStyles{
+class AppTextStyles {
   static const headerStyle = TextStyle(
-    fontSize: extraExtraLargeSize,
+    fontSize: extraLargeSize,
     fontWeight: FontWeight.bold,
+  );
+
+  static const chipTextStyle = TextStyle(
+    fontSize: 14,
+  );
+
+  static const selectedChipTextStyle = TextStyle(
+    fontSize: 14,
+    color: Colors.white
   );
 
   static const subHeaderStyle = TextStyle(
@@ -29,6 +38,10 @@ class AppTextStyles{
 
   static const smallVerticalSpacing = SizedBox(
     height: 10,
+  );
+
+  static const extraSmallVerticalSpacing = SizedBox(
+    height: 5,
   );
 
   static const largeHorizontalSpacing = SizedBox(

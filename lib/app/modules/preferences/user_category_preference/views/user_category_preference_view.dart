@@ -1,5 +1,6 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
+import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,14 @@ class UserCategoryPreferenceView
               ),
               OutlinedButtonWidget(
                 onClick: () {
-                  Get.toNamed(Routes.USER_TOPIC_PREFERENCE);
+                  if (controller.selectedCategories.isEmpty) {
+                    showToast("Please select at least one category");
+                  } else {
+                    Get.toNamed(
+                      Routes.USER_TOPIC_PREFERENCE,
+                      arguments: controller.selectedCategories,
+                    );
+                  }
                 },
                 name: "Continue",
               ),
@@ -46,22 +54,32 @@ class UserCategoryPreferenceView
   }
 
   Widget _buildHeader() {
-    return const Row(
+    const TextStyle headerStyle = TextStyle(
+      fontSize: normalSize,
+      fontWeight: FontWeight.w500,
+    );
+
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        const Text(
           "What are you curious about?",
-          style: TextStyle(
-            fontSize: normalSize,
-            fontWeight: FontWeight.w500,
-          ),
+          style: headerStyle,
         ),
-        Text(
-          "Select all",
-          style: TextStyle(
-            fontSize: normalSize,
-            fontWeight: FontWeight.w500,
-            color: colorPrimary,
+        GestureDetector(
+          onTap: () {
+            if (controller.selectedCategories.length ==
+                (controller.topics.value?.data?.length ?? 0)) {
+              controller.selectedCategories.clear();
+            } else {
+              controller.selectedCategories
+                ..clear()
+                ..addAll(controller.topics.value?.data ?? []);
+            }
+          },
+          child: Text(
+            "Select all",
+            style: headerStyle.copyWith(color: colorPrimary),
           ),
         ),
       ],
@@ -69,12 +87,14 @@ class UserCategoryPreferenceView
   }
 
   Widget _buildCategoryList() {
-    return ListView.builder(
-      itemCount: controller.categories.length,
-      itemBuilder: (context, index) {
-        var category = controller.categories[index];
-        return _buildCategoryTile(category);
-      },
+    return Obx(
+      () => ListView.builder(
+        itemCount: controller.topics.value?.data?.length ?? 0,
+        itemBuilder: (context, index) {
+          var category = controller.topics.value?.data?[index];
+          return _buildCategoryTile(category);
+        },
+      ),
     );
   }
 
@@ -92,21 +112,32 @@ class UserCategoryPreferenceView
         ),
         borderRadius: BorderRadius.circular(mediumSize),
       ),
-      child: ListTile(
-        title: Text(category.title),
-        trailing: Checkbox(
-          value: category.selected,
-          onChanged: (checked) {
-            // Handle checkbox state change
-            category.selected = checked ?? false;
-            // Call your controller's method to update state if needed
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(mediumSize),
+      child: Obx(
+        () => ListTile(
+          title: Text(category.name),
+          trailing: Checkbox(
+            checkColor: Colors.white,
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return Colors.orange;
+              }
+              return Theme.of(Get.context!).colorScheme.surface;
+            }),
+            value: controller.selectedCategories.contains(category),
+            onChanged: (checked) {
+              if (controller.selectedCategories.contains(category)) {
+                controller.selectedCategories.remove(category);
+              } else {
+                controller.selectedCategories.add(category);
+              }
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(mediumSize),
+            ),
           ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: smallSize,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: smallSize,
+          ),
         ),
       ),
     );

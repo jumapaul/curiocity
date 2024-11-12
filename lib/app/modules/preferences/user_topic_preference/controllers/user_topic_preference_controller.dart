@@ -1,23 +1,11 @@
+import 'package:curiocity/app/data/model/topics_response.dart';
 import 'package:get/get.dart';
 
 class UserTopicPreferenceController extends GetxController {
-  var topics = RxList<String>([
-    "Nightlife",
-    "Shopping",
-    "Food",
-    "Entertainment",
-    "Architecture",
-    "Arts & Culture",
-    "Education & Learning",
-    "Events & Festivals",
-    "Adventure",
-    "Parks & Gardens",
-    "Fitness",
-    "Sports & Recreation",
-    "Wellness & SelfCare",
-    "Technology & Innovation",
-    "Volunteering & charity"
-  ]);
+  var selectedCategories = RxList<CurioCategory>();
+  var topics = RxList<Topic>();
+
+  var selectedTopics = RxList<Topic>();
 
   @override
   void onInit() {
