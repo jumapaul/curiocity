@@ -50,14 +50,16 @@ class LoginScreenView extends GetView<LoginScreenController> {
                   ),
                   const SizedBox(height: mediumSize),
                   Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () => Get.toNamed(Routes.FORGOT_PASSWORD),
-                      child: const Text(
-                        "Forgot password?",
-                        style: TextStyle(color: colorPrimary),
-                      ),
-                    ),
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.RESET_EMAIL_SCREEN);
+                        },
+                        child: const Text(
+                          "Forgot password?",
+                          style: TextStyle(color: colorPrimary),
+                        ),
+                      )
                   ),
                   const SizedBox(height: mediumSize),
                   OutlinedButtonWidget(
@@ -67,12 +69,12 @@ class LoginScreenView extends GetView<LoginScreenController> {
                     name: buttonState.isLoading ? null : "Continue",
                     child: buttonState.isLoading
                         ? const SizedBox(
-                      height: 30,
-                      width: 30,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    )
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
                         : null,
                   ),
                   const SizedBox(height: mediumSize),

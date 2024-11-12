@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:curiocity/app/common/utils/constants.dart';
 import 'package:curiocity/app/common/utils/show_toast.dart';
+import 'package:curiocity/app/data/model/reset_password_otp_model.dart';
 import 'package:curiocity/app/data/model/sign_in_model.dart';
 import 'package:curiocity/app/data/model/user_model.dart';
 import 'package:curiocity/app/data/providers/shared_preferences.dart';
@@ -50,11 +51,11 @@ class LoginScreenController extends GetxController {
           //Decode the response body
           SharedPreferenceHelper.saveUser(responseBody);
           Get.toNamed(Routes.USER_CATEGORY_PREFERENCE);
-        }else{
+        } else {
           _status.value = RxStatus.error();
           showToast(responseBody['message']);
         }
-      }else{
+      } else {
         _status.value = RxStatus.error();
       }
     } catch (error) {
@@ -64,6 +65,7 @@ class LoginScreenController extends GetxController {
 
     return UserModel();
   }
+
 
   bool validEmail(String email) {
     bool isValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
@@ -90,3 +92,10 @@ class LoginScreenController extends GetxController {
     return true;
   }
 }
+
+
+// import 'package:http/http.dart' as http;
+//
+// class ResetEmailScreenController extends GetxController {
+//
+

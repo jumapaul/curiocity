@@ -5,6 +5,8 @@ class Constants{
   static const signUpEndPoint = "$baseUrl/api/v1/auth/signup";
   static const verifyEmailEndPoint = "$baseUrl/api/v1/auth/verify-otp";
   static const signInEndPoint = "$baseUrl/api/v1/auth/login";
+  static const resetOtpEndPoint = "$baseUrl/api/v1/auth/send-reset-token";
+  static const resetPasswordOtp = "$baseUrl/api/v1/auth/reset-password";
   static Future<String?> token() async{
     String? token = await SharedPreferenceHelper.getToken();
     return token;

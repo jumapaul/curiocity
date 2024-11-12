@@ -5,10 +5,12 @@ import 'package:pinput/pinput.dart';
 
 import '../../../../common/dimens/dimens.dart';
 import '../../../../common/utils/show_toast.dart';
-import '../controllers/reset_password_screen_controller.dart';
+import '../../../../routes/app_pages.dart';
+import '../controllers/reset_otp_screen_controller.dart';
 
-class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
-  const ResetPasswordScreenView({super.key});
+class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
+  const ResetOtpScreenView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +33,11 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: mediumSize),
         child: Obx(
-              () {
-            final currentEmail = ModalRoute.of(context)?.settings.arguments;
+          () {
+            final Map<String, dynamic> arguments =
+                Get.arguments as Map<String, dynamic>;
+
+            final currentEmail = arguments['email'];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,7 +55,7 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
                   height: 100,
                 ),
                 Text(
-                  "We sent an email verification code to $currentEmail",
+                  "Enter otp sent to $currentEmail",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: normalSize,
@@ -59,7 +64,7 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
                 const SizedBox(
                   height: extraExtraLargeSize,
                 ),
-                _verifyOtpWidget(),
+                _verifyOtpWidget(currentEmail),
                 const SizedBox(
                   height: mediumSize,
                 ),
@@ -73,21 +78,34 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
                         height: mediumSize,
                       ),
                       TextButton(
-                          onPressed: () {
-                            if (controller.start != 0) {
-                              showToast("Try after ${controller.start.value}");
-                            } else {
-                              controller.resetTimer();
-                              //todo
-                            }
-                          },
-                          child: Text("Resend Otp",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.color,
-                              )))
+                        onPressed: () {
+                          if (controller.start != 0) {
+                            showToast("Try after ${controller.start.value}");
+                          } else {
+                            controller.resetTimer();
+                            controller.resendResetOtp(currentEmail);
+                          }
+                        },
+                        child: controller.resetOtpStatus.isLoading
+                            ? SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface,
+                                ),
+                              )
+                            : Text(
+                                "Resend Otp",
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color,
+                                ),
+                              ),
+                      ),
                     ],
                   ),
                 )
@@ -99,7 +117,7 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
     );
   }
 
-  Widget _verifyOtpWidget() {
+  Widget _verifyOtpWidget(String email) {
     final defaultTheme = PinTheme(
         width: 50,
         height: 50,
@@ -115,6 +133,8 @@ class ResetPasswordScreenView extends GetView<ResetPasswordScreenController> {
           decoration: defaultTheme.decoration!
               .copyWith(border: Border.all(color: Colors.orangeAccent))),
       onCompleted: (otp) {
+        Get.toNamed(Routes.RESET_PASSWORD,
+            arguments: {'email': email, 'otp': otp});
         // controller.verifyEmail(otp);
       },
     );

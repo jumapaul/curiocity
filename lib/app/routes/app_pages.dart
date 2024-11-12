@@ -3,12 +3,16 @@ import 'package:get/get.dart';
 import '../data/providers/shared_preferences.dart';
 import '../modules/auth/login_screen/bindings/login_screen_binding.dart';
 import '../modules/auth/login_screen/views/login_screen_view.dart';
-import '../modules/auth/reset_password_screen/bindings/reset_password_screen_binding.dart';
-import '../modules/auth/reset_password_screen/views/reset_password_screen_view.dart';
+import '../modules/auth/reset_email_screen/bindings/reset_email_screen_binding.dart';
+import '../modules/auth/reset_email_screen/views/reset_email_screen_view.dart';
+import '../modules/auth/reset_otp_screen/bindings/reset_otp_screen_binding.dart';
+import '../modules/auth/reset_otp_screen/views/reset_otp_screen_view.dart';
+import '../modules/auth/reset_password/bindings/reset_password_binding.dart';
+import '../modules/auth/reset_password/views/reset_password_view.dart';
 import '../modules/auth/sign_up_screen/bindings/sign_up_screen_binding.dart';
 import '../modules/auth/sign_up_screen/views/sign_up_screen_view.dart';
-import '../modules/auth/verifyl_email_screen/bindings/verify_email_screen_binding.dart';
-import '../modules/auth/verifyl_email_screen/views/verify_email_screen_view.dart';
+import '../modules/auth/verify_email_screen/bindings/verify_email_screen_binding.dart';
+import '../modules/auth/verify_email_screen/views/verify_email_screen_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/on_board_screen/bindings/on_board_screen_binding.dart';
@@ -82,9 +86,19 @@ class AppPages {
       binding: PreferenceNotificationBinding(),
     ),
     GetPage(
-      name: _Paths.RESET_PASSWORD_SCREEN,
-      page: () => const ResetPasswordScreenView(),
-      binding: ResetPasswordScreenBinding(),
+      name: _Paths.RESET_OTP_SCREEN,
+      page: () => const ResetOtpScreenView(),
+      binding: ResetOtpScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_EMAIL_SCREEN,
+      page: () => const ResetEmailScreenView(),
+      binding: ResetEmailScreenBinding(),
     ),
   ];
 }
