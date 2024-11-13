@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:badges/badges.dart' as badges;
 import '../controllers/home_controller.dart';
+import '../pages/for_you_page.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -18,8 +19,8 @@ class HomeView extends GetView<HomeController> {
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
-          children: const [
-            Center(child: Text('Home')),
+          children:  [
+            ForYouPage(controller: controller),
             Center(child: Text('Search')),
             Center(child: Text('Profile')),
             Center(child: Text('Profile')),

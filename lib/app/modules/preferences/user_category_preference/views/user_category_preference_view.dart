@@ -4,6 +4,8 @@ import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
 import '../../../common_widget/outlined_button.dart';
 import '../controllers/user_category_preference_controller.dart';
 
@@ -88,12 +90,15 @@ class UserCategoryPreferenceView
 
   Widget _buildCategoryList() {
     return Obx(
-      () => ListView.builder(
-        itemCount: controller.topics.value?.data?.length ?? 0,
-        itemBuilder: (context, index) {
-          var category = controller.topics.value?.data?[index];
-          return _buildCategoryTile(category);
-        },
+      () => Skeletonizer(
+        enabled: controller.isLoading.value,
+        child: ListView.builder(
+          itemCount: controller.topics.value?.data?.length ?? 0,
+          itemBuilder: (context, index) {
+            var category = controller.topics.value?.data?[index];
+            return _buildCategoryTile(category);
+          },
+        ),
       ),
     );
   }
