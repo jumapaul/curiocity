@@ -53,7 +53,9 @@ class ForYouPage extends StatelessWidget {
       children: [
         Row(
           children: [
-            const CircleAvatar(),
+            const CircleAvatar(
+              radius: 20,
+            ),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
