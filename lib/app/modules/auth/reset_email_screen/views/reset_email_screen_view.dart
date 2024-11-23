@@ -15,13 +15,33 @@ class ResetEmailScreenView extends GetView<ResetEmailScreenController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
+        appBar: AppBar(
+          title: const Text("Back"),
+        ),
         body: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Enter email address to change password"),
+              Container(
+                margin: const EdgeInsets.only(top: 30, bottom: 30),
+                child: const Icon(
+                  Icons.lock_outline_rounded,
+                  size: 50,
+                ),
+              ),
+              Text(
+                "Forgot Password?",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                    color: Theme.of(Get.context!).colorScheme.inverseSurface),
+              ),
+              AppTextStyles.mediumVerticalSpacing,
+              const Text(
+                "Enter email address you used to register",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               AppTextStyles.largeVerticalSpacing,
               InputTextFieldWidget(
                   hintText: "Enter email",

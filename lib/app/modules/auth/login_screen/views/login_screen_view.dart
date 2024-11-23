@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
 import 'package:curiocity/app/modules/auth/login_screen/views/widget/sign_in_and_up_row.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
+import 'package:lottie/lottie.dart';
 import '../../../common_widget/outlined_button.dart';
 import '../controllers/login_screen_controller.dart';
 
@@ -25,16 +26,18 @@ class LoginScreenView extends GetView<LoginScreenController> {
               child: Column(
                 children: [
                   const SizedBox(height: extraLargeSize),
-                  SvgPicture.asset("assets/images/login_vector.svg"),
-                  const SizedBox(height: mediumSize),
-                  Image.asset("assets/images/curio.png"),
+                  Lottie.asset(
+                    'assets/images/logo.json',
+                    backgroundLoading: true,
+                    animate: true
+                  ),
                   const SizedBox(height: mediumSize),
                   const Text(
                     "Welcome!",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: mediumSize),
+                        fontWeight: FontWeight.bold, fontSize: largeSize),
                   ),
-                  const SizedBox(height: mediumSize),
+                  const SizedBox(height: extraLargeSize),
                   InputTextFieldWidget(
                     hintText: 'Email Address',
                     labelText: "Email address",
@@ -48,7 +51,6 @@ class LoginScreenView extends GetView<LoginScreenController> {
                     errorText: controller.passwordErrorMessage?.value,
                     passwordTextEditController: controller.passwordController,
                   ),
-                  const SizedBox(height: mediumSize),
                   Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -57,11 +59,9 @@ class LoginScreenView extends GetView<LoginScreenController> {
                         },
                         child: const Text(
                           "Forgot password?",
-                          style: TextStyle(color: colorPrimary),
+                          style: TextStyle(color: colorPrimary, fontSize: 12),
                         ),
-                      )
-                  ),
-                  const SizedBox(height: mediumSize),
+                      )),
                   OutlinedButtonWidget(
                     onClick: () {
                       controller.signIn();
@@ -79,7 +79,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                   ),
                   const SizedBox(height: mediumSize),
                   SignInAndUpRow(
-                    desc: 'Not a member?',
+                    desc: 'Not a member? ',
                     action: "Sign Up",
                     onClick: () {
                       Get.toNamed(Routes.SIGN_UP_SCREEN);

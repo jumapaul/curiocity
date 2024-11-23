@@ -10,18 +10,6 @@ class UserCategoryPreferenceController extends GetxController {
 
   void getCategory() async {
     isLoading.value = true;
-    var dummy = TopicsResponse(
-      data: List.filled(
-        10,
-        CurioCategory(
-          id: "",
-          name: "",
-          description: "",
-          topics: [],
-        ),
-      ),
-    );
-    topics.value = dummy;
     final topicsResponse = await apiProvider.getData<TopicsResponse>(
       'category',
       (json) => TopicsResponse.fromJson(json),

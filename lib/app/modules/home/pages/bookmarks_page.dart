@@ -1,87 +1,40 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
-import 'package:curiocity/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ForYouPage extends StatelessWidget {
+import '../controllers/home_controller.dart';
+
+class BookmarksPage extends StatelessWidget {
   final HomeController controller;
 
-  const ForYouPage({super.key, required this.controller});
+  const BookmarksPage({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     final Color chipBackgroundColor = colorPrimary.withOpacity(1.0);
+
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppTextStyles.mediumVerticalSpacing,
           Container(
-            height: 30,
-            margin: const EdgeInsets.only(left: 16),
-            child: Obx(
-              () => ListView.builder(
-                itemCount: controller.topics.value?.data?.length ?? 0,
-                itemBuilder: (context, index) {
-                  var category = controller.topics.value?.data?[index];
-                  return GestureDetector(
-                    onTap: () {
-                      if (controller.selectedCategories.contains(category)) {
-                        controller.selectedCategories.remove(category);
-                      } else {
-                        controller.selectedCategories.add(category!);
-                      }
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      child: Obx(
-                        () => Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color:
-                                controller.selectedCategories.contains(category)
-                                    ? const Color(0xFFFBB80E)
-                                    : Get.theme.brightness == Brightness.dark
-                                        ? Get.theme.colorScheme.surface
-                                        : Colors.white,
-                            border: Border.all(
-                              color: Theme.of(Get.context!)
-                                  .colorScheme
-                                  .inverseSurface
-                                  .withOpacity(.3),
-                              width: 0.5,
-                            ),
-                            borderRadius: BorderRadius.circular(largeSize),
-                          ),
-                          alignment: Alignment.center,
-                          // Center text vertically and horizontally
-                          child: IntrinsicWidth(
-                            child: Text(
-                              category?.name ?? "",
-                              style: TextStyle(
-                                color: controller.selectedCategories
-                                        .contains(category)
-                                    ? Colors.white
-                                    : Get.theme.colorScheme.inverseSurface,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                scrollDirection: Axis.horizontal,
-              ),
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              "Posts",
+              style: Get.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           AppTextStyles.mediumVerticalSpacing,
           Expanded(
             child: ListView.builder(
-              itemCount: 10, // Replace with actual item count
+              itemCount: 1,
               itemBuilder: (context, index) {
                 return Padding(
                   padding:
@@ -117,14 +70,6 @@ class ForYouPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFBB80E),
-        onPressed: () {},
-        child: Icon(
-          Icons.edit,
-          color: Get.theme.colorScheme.surface,
-        ),
       ),
     );
   }
@@ -219,11 +164,11 @@ class ForYouPage extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(
-              'assets/images/bookmark.png',
-              color: Get.theme.colorScheme.inverseSurface,
+            Icon(
+              Icons.block_flipped,
+              color: Get.theme.colorScheme.inverseSurface.withOpacity(.6),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 10),
             Icon(Icons.share,
                 color: Get.theme.colorScheme.inverseSurface.withOpacity(.6)),
           ],
@@ -290,7 +235,7 @@ class ForYouPage extends StatelessWidget {
                 ),
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                   decoration: BoxDecoration(
                     color: Get.theme.brightness == Brightness.dark
                         ? Get.theme.colorScheme.surface
@@ -319,7 +264,7 @@ class ForYouPage extends StatelessWidget {
                                   hintText: 'Add a comment...',
                                   hintStyle: TextStyle(
                                       color:
-                                          Get.theme.colorScheme.inverseSurface),
+                                      Get.theme.colorScheme.inverseSurface),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   contentPadding: const EdgeInsets.symmetric(

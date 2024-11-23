@@ -10,13 +10,13 @@ class OnBoardScreenController extends GetxController {
   final List<OnBoardModel> pages = [
     OnBoardModel(
         description: "Discover.Explore.Anything. Anywhere.Anytime",
-        image: 'assets/images/splash_one.gif'),
+        image: 'assets/images/splash_1.json'),
     OnBoardModel(
         description: "Discover spaces and curios around you",
-        image: 'assets/images/splash_two.gif'),
+        image: 'assets/images/splash_2.json'),
     OnBoardModel(
         description: "Find people and communities that love what you enjoy",
-        image: 'assets/images/splash_three.gif'),
+        image: 'assets/images/splash_3.json'),
   ];
 
   @override

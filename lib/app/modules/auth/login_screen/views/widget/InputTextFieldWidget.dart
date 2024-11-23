@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class InputTextFieldWidget extends StatefulWidget {
   final String hintText;
@@ -29,9 +30,16 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
         errorText: widget.errorText,
         hintText: widget.hintText,
         labelText: widget.labelText,
+        hintStyle: TextStyle(
+            fontSize: 14, color: Get.theme.colorScheme.inverseSurface),
+        labelStyle: TextStyle(
+            fontSize: 14, color: Get.theme.colorScheme.inverseSurface),
       ),
       maxLines: 4,
       minLines: 1,
+      style: const TextStyle(
+        fontSize: 14,
+      ),
     );
   }
 }
@@ -72,6 +80,9 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
         hintText: widget.hintText,
         labelText: widget.labelText,
         errorText: widget.errorText,
+        hintStyle: const TextStyle(fontSize: 14),
+        labelStyle: TextStyle(
+            fontSize: 14, color: Theme.of(context).colorScheme.inverseSurface),
         suffixIcon: IconButton(
           onPressed: () {
             _toggleVisibility();
@@ -86,6 +97,9 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
                   Icons.visibility_off,
                 ),
         ),
+      ),
+      style: const TextStyle(
+        fontSize: 14,
       ),
     );
   }

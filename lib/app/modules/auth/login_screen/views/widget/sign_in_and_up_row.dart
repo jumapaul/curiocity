@@ -20,12 +20,14 @@ class SignInAndUpRow extends StatelessWidget {
           desc,
           style: const TextStyle(fontSize: 12),
         ),
-        TextButton(
-          onPressed: onClick,
+        GestureDetector(
+          onTap: onClick,
           child: Text(
             action,
             style: const TextStyle(
-                color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 12),
+                color: Color(0xFF3464B8),
+                fontWeight: FontWeight.bold,
+                fontSize: 12),
           ),
         ),
       ],

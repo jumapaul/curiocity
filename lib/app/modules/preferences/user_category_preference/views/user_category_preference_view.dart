@@ -4,6 +4,7 @@ import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../common_widget/outlined_button.dart';
@@ -68,21 +69,25 @@ class UserCategoryPreferenceView
           "What are you curious about?",
           style: headerStyle,
         ),
-        GestureDetector(
-          onTap: () {
-            if (controller.selectedCategories.length ==
-                (controller.topics.value?.data?.length ?? 0)) {
-              controller.selectedCategories.clear();
-            } else {
-              controller.selectedCategories
-                ..clear()
-                ..addAll(controller.topics.value?.data ?? []);
-            }
-          },
-          child: Text(
-            "Select all",
-            style: headerStyle.copyWith(color: colorPrimary),
-          ),
+        Obx(
+          () => controller.isLoading.value
+              ? Container()
+              : GestureDetector(
+                  onTap: () {
+                    if (controller.selectedCategories.length ==
+                        (controller.topics.value?.data?.length ?? 0)) {
+                      controller.selectedCategories.clear();
+                    } else {
+                      controller.selectedCategories
+                        ..clear()
+                        ..addAll(controller.topics.value?.data ?? []);
+                    }
+                  },
+                  child: Text(
+                    "Select all",
+                    style: headerStyle.copyWith(color: colorPrimary),
+                  ),
+                ),
         ),
       ],
     );
@@ -90,15 +95,39 @@ class UserCategoryPreferenceView
 
   Widget _buildCategoryList() {
     return Obx(
-      () => Skeletonizer(
-        enabled: controller.isLoading.value,
-        child: ListView.builder(
-          itemCount: controller.topics.value?.data?.length ?? 0,
-          itemBuilder: (context, index) {
-            var category = controller.topics.value?.data?[index];
-            return _buildCategoryTile(category);
-          },
-        ),
+      () => ListView.builder(
+        itemCount: controller.topics.value?.data?.length ?? 0,
+        itemBuilder: (context, index) {
+          var category = controller.topics.value?.data?[index];
+          return controller.isLoading.value
+              ? _buildShimmerPlaceholder()
+              : _buildCategoryTile(category);
+        },
+      ),
+    );
+  }
+
+  Widget _buildShimmerPlaceholder() {
+    return SizedBox(
+      height: Get.height,
+      child: ListView.builder(
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                height: 60.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -138,6 +167,9 @@ class UserCategoryPreferenceView
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(mediumSize),
+              side: const BorderSide(
+                width: 1.0, // Border width
+              ),
             ),
           ),
           contentPadding: const EdgeInsets.symmetric(

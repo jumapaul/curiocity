@@ -83,8 +83,8 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
             children: [
               ClipOval(
                 child: Container(
-                  height: 100,
-                  width: 100,
+                  height: 80,
+                  width: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey[200], // Optional background color
@@ -153,8 +153,29 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
               decoration: InputDecoration(
                 hintText: hintText,
                 labelText: labelText,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Theme.of(Get.context!).colorScheme.inverseSurface,
+                    width: 1,
+                  ),
+                ),
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  color: Get.theme.colorScheme.inverseSurface.withOpacity(.5),
+                ),
+                labelStyle: TextStyle(
+                  fontSize: 14,
+                  color: Get.theme.colorScheme.inverseSurface.withOpacity(.9),
+                ),
               ),
               enabled: false,
+              style: const TextStyle(
+                fontSize: 14,
+              ),
             ),
           )
         : InputTextFieldWidget(
@@ -187,6 +208,8 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
     return IntlPhoneField(
       decoration: InputDecoration(
         labelText: 'Phone Number',
+        hintStyle: const TextStyle(fontSize: 14),
+        labelStyle: const TextStyle(fontSize: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -202,6 +225,9 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
       onChanged: (phone) {
         print(phone.completeNumber);
       },
+      style: const TextStyle(
+        fontSize: 14,
+      ),
     );
   }
 

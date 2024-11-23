@@ -48,7 +48,6 @@ class PreferenceNotificationView
               child: ListView.separated(
                   itemBuilder: (context, index) {
                     var singlePermission = permissions[index];
-
                     return NotificationPermissions(
                       title: singlePermission.title,
                       subTitle: singlePermission.subTitle,
@@ -64,7 +63,10 @@ class PreferenceNotificationView
                 onClick: () {
                   Get.toNamed(Routes.SETTING_UP_PROFILE);
                 },
-                name: "Continue")
+                name: "Continue"),
+            const SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
@@ -98,13 +100,16 @@ class _NotificationPermissionsState extends State<NotificationPermissions> {
     return ListTile(
       title: Text(
         widget.title,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(),
       ),
-      subtitle: Text(widget.subTitle),
+      subtitle: Text(
+        widget.subTitle,
+        style: const TextStyle(fontSize: 12),
+      ),
       trailing: Switch(
-          trackOutlineColor: MaterialStateProperty.resolveWith(
-              (final Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
+          trackOutlineColor:
+              WidgetStateProperty.resolveWith((final Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
               return null;
             }
             return Colors.grey.shade300;

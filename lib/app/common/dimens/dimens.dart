@@ -10,7 +10,7 @@ const extraExtraLargeSize = 40.0;
 
 class AppTextStyles {
   static const headerStyle = TextStyle(
-    fontSize: extraLargeSize,
+    fontSize: largeSize,
     fontWeight: FontWeight.bold,
   );
 
@@ -33,7 +33,7 @@ class AppTextStyles {
   );
 
   static const mediumVerticalSpacing = SizedBox(
-    height: 20,
+    height: 16,
   );
 
   static const smallVerticalSpacing = SizedBox(

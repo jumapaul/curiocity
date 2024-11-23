@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../../common_widget/outlined_button.dart';
 import '../controllers/sign_up_screen_controller.dart';
-import 'package:curiocity/app/modules/auth/login_screen/views/login_screen_view.dart';
 import 'package:curiocity/app/modules/auth/login_screen/views/widget/sign_in_and_up_row.dart';
 
 class SignUpScreenView extends GetView<SignUpScreenController> {
@@ -45,12 +44,12 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
                     const Text(
                       "Create an account to get started",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: mediumSize),
+                          fontWeight: FontWeight.w500, fontSize: mediumSize),
                     ),
-                    const SizedBox(height: mediumSize),
+                    const SizedBox(height: 25),
                     InputTextFieldWidget(
                       hintText: "Input Full Name",
-                      labelText: "Fullname",
+                      labelText: "Full Name",
                       editingController: controller.fullNameController,
                     ),
                     const SizedBox(height: mediumSize),
@@ -77,7 +76,7 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
                     ),
                     const SizedBox(height: mediumSize),
                     SignInAndUpRow(
-                      desc: "By signing up you agree to our",
+                      desc: "By signing up you agree to our ",
                       action: "Terms and conditions",
                       onClick: () {
                         // Handle terms and conditions click
@@ -92,7 +91,7 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
                     ),
                     const SizedBox(height: mediumSize),
                     SignInAndUpRow(
-                      desc: "Already a member?",
+                      desc: "Already a member? ",
                       action: "Login",
                       onClick: () {
                         Get.toNamed(Routes.LOGIN_SCREEN);

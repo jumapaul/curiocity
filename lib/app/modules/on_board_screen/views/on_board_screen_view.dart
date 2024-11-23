@@ -2,7 +2,7 @@ import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import '../../auth/login_screen/views/login_screen_view.dart';
+import 'package:lottie/lottie.dart';
 import '../../common_widget/outlined_button.dart';
 import '../controllers/on_board_screen_controller.dart';
 
@@ -40,6 +40,17 @@ class OnBoardScreenView extends GetView<OnBoardScreenController> {
               }),
               const SizedBox(
                 height: 30,
+              ),
+              Obx(
+                () => Text(
+                  controller.pages[controller.currentPage.value].description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 22),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
               ),
               OutlinedButtonWidget(
                 onClick: () {
@@ -106,20 +117,13 @@ class OnBoardContent extends StatelessWidget {
         const SizedBox(
           height: 100,
         ),
-        SizedBox(
-          height: 213,
-          width: 145,
-          child: Image.asset(
-            image,
-            fit: BoxFit.contain,
-          ),
-        ),
+        Flexible(
+            child: Lottie.asset(
+          image,
+          backgroundLoading: true,
+          animate: true,
+        )),
         const SizedBox(height: 32),
-        Text(
-          description,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-        )
       ],
     );
   }
@@ -139,17 +143,20 @@ class DotIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(totalPages, (index) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: 8,
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          width: currentPage == index ? 24 : 8,
-          decoration: BoxDecoration(
-              color: currentPage == index ? Colors.orangeAccent : Colors.grey,
-              borderRadius: BorderRadius.circular(12)),
-        );
-      }),
+      children: List.generate(
+        totalPages,
+        (index) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            height: 12,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            width: currentPage == index ? 24 : 12,
+            decoration: BoxDecoration(
+                color: currentPage == index ? Colors.orangeAccent : Colors.grey,
+                borderRadius: BorderRadius.circular(12)),
+          );
+        },
+      ),
     );
   }
 }

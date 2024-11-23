@@ -1,9 +1,12 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
+import 'package:curiocity/app/modules/home/pages/inbox_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:badges/badges.dart' as badges;
 import '../controllers/home_controller.dart';
+import '../pages/bookmarks_page.dart';
+import '../pages/explore_page.dart';
 import '../pages/for_you_page.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -12,18 +15,42 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Get.theme.brightness == Brightness.dark
+          ? Get.theme.colorScheme.surface
+          : Colors.white,
       appBar: AppBar(
         title: Image.asset("assets/images/logo.png"),
-        actions: [_notificationBadge()],
+        iconTheme: const IconThemeData(color: Color(0xFFFBB80E), size: 30),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.search,
+            ),
+          ),
+          _notificationBadge(),
+          Container(
+            width: 10,
+          )
+        ],
+        elevation: 0,
       ),
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
-          children:  [
-            ForYouPage(controller: controller),
-            Center(child: Text('Search')),
-            Center(child: Text('Profile')),
-            Center(child: Text('Profile')),
+          children: [
+            ForYouPage(
+              controller: controller,
+            ),
+            ExplorePage(
+              controller: controller,
+            ),
+            InboxPage(
+              controller: controller,
+            ),
+            BookmarksPage(
+              controller: controller,
+            )
           ],
         ),
       ),
@@ -33,9 +60,17 @@ class HomeView extends GetView<HomeController> {
           onDestinationSelected: (index) =>
               controller.selectedIndex.value = index,
           destinations: _buildNavigationDestinations(),
+          elevation: 10,
+          backgroundColor:
+              Get.theme.colorScheme.inverseSurface.withOpacity(.025),
+          indicatorColor: Get.theme.colorScheme.inverseSurface.withOpacity(.1),
         ),
       ),
       drawer: Drawer(
+        elevation: 0,
+        backgroundColor: Get.theme.brightness == Brightness.dark
+            ? Get.theme.colorScheme.surface
+            : Colors.white,
         child: Column(
           children: [
             _profileView(),
@@ -84,7 +119,7 @@ class HomeView extends GetView<HomeController> {
         icon: Icon(Icons.messenger_outline_outlined),
         selectedIcon:
             Icon(Icons.messenger_outline_outlined, color: Colors.orange),
-        label: 'Inbox',
+        label: 'Conversations',
       ),
       _buildNavigationDestination('assets/images/bookmark.png', 'Bookmarks'),
     ];

@@ -70,8 +70,8 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
     return SingleChildScrollView(
       child: Obx(
         () => Wrap(
-          spacing: 5,
-          runSpacing: 5,
+          spacing: 10,
+          runSpacing: 10,
           children:
               controller.topics.map((topic) => _buildChip(topic)).toList(),
         ),
@@ -90,6 +90,7 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
               : controller.selectedTopics.add(topic);
         },
         child: Chip(
+          elevation: 0,
           label: Text(
             topic.name ?? '',
             style: isSelected
@@ -98,10 +99,15 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
           ),
           backgroundColor: isSelected
               ? chipBackgroundColor
-              : Theme.of(Get.context!).colorScheme.surface,
+              : (Get.theme.brightness == Brightness.light
+                  ? Colors.white
+                  : Get.theme.colorScheme.surface),
           side: BorderSide(
-              color: Theme.of(Get.context!).colorScheme.inverseSurface,
-              width: 0.5),
+              color: Theme.of(Get.context!)
+                  .colorScheme
+                  .inverseSurface
+                  .withOpacity(.6),
+              width: 0.2),
           padding: const EdgeInsets.symmetric(horizontal: 4),
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: RoundedRectangleBorder(

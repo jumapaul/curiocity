@@ -12,10 +12,11 @@ class OutlinedButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 50,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.orangeAccent,
-          side: const BorderSide(color: Colors.orangeAccent),
+          backgroundColor: const Color(0xFFFBB80E),
+          side: const BorderSide(color: Color(0xFFFBB80E)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
