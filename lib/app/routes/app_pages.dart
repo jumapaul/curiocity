@@ -13,6 +13,8 @@ import '../modules/auth/sign_up_screen/bindings/sign_up_screen_binding.dart';
 import '../modules/auth/sign_up_screen/views/sign_up_screen_view.dart';
 import '../modules/auth/verify_email_screen/bindings/verify_email_screen_binding.dart';
 import '../modules/auth/verify_email_screen/views/verify_email_screen_view.dart';
+import '../modules/create_post/bindings/create_post_binding.dart';
+import '../modules/create_post/views/create_post_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/on_board_screen/bindings/on_board_screen_binding.dart';
@@ -23,6 +25,8 @@ import '../modules/preferences/user_category_preference/bindings/user_category_p
 import '../modules/preferences/user_category_preference/views/user_category_preference_view.dart';
 import '../modules/preferences/user_topic_preference/bindings/user_topic_preference_binding.dart';
 import '../modules/preferences/user_topic_preference/views/user_topic_preference_view.dart';
+import '../modules/search/bindings/search_binding.dart';
+import '../modules/search/views/search_view.dart';
 import '../modules/setting_up_profile/bindings/setting_up_profile_binding.dart';
 import '../modules/setting_up_profile/views/setting_up_profile_view.dart';
 
@@ -37,7 +41,7 @@ class AppPages {
     final isOnBoarded = await SharedPreferenceHelper.getOnBoardState();
 
     // return isOnBoarded ? login : on_board;
-    return  on_board;
+    return on_board;
   }
 
   static final routes = [
@@ -100,6 +104,16 @@ class AppPages {
       name: _Paths.RESET_EMAIL_SCREEN,
       page: () => const ResetEmailScreenView(),
       binding: ResetEmailScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_POST,
+      page: () => const CreatePostView(),
+      binding: CreatePostBinding(),
     ),
   ];
 }

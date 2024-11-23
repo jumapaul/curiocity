@@ -158,6 +158,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_multi_select_items:
+    dependency: "direct main"
+    description:
+      name: flutter_multi_select_items
+      sha256: f8182eddcc3a9a19a56b401da2e4408eb4b6a9d2a99123d70f14bbf81868d8df
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -376,6 +384,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  multi_select_search:
+    dependency: "direct main"
+    description:
+      name: multi_select_search
+      sha256: "631571789769d1d078a18e1efb6f635e6d37994f755c0db1288e52e150b3c773"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   path:
     dependency: transitive
     description:
@@ -557,14 +573,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  tab_container:
-    dependency: "direct main"
-    description:
-      name: tab_container
-      sha256: "15f87032f63fd7f0a59740aa31c5bc7056af3159a37311bca546d343240f3029"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.5.3"
   term_glyph:
     dependency: transitive
     description:

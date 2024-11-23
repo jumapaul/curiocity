@@ -1,6 +1,7 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
 import 'package:curiocity/app/modules/home/controllers/home_controller.dart';
+import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -120,7 +121,9 @@ class ForYouPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFBB80E),
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(Routes.CREATE_POST);
+        },
         child: Icon(
           Icons.edit,
           color: Get.theme.colorScheme.surface,

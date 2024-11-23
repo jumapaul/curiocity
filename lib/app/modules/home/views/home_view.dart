@@ -1,6 +1,7 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
 import 'package:curiocity/app/modules/home/pages/inbox_page.dart';
+import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,9 @@ class HomeView extends GetView<HomeController> {
         iconTheme: const IconThemeData(color: Color(0xFFFBB80E), size: 30),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(Routes.SEARCH);
+            },
             icon: const Icon(
               Icons.search,
             ),
