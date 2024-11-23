@@ -235,7 +235,7 @@ class BookmarksPage extends StatelessWidget {
                 ),
                 child: Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                   decoration: BoxDecoration(
                     color: Get.theme.brightness == Brightness.dark
                         ? Get.theme.colorScheme.surface
@@ -255,8 +255,10 @@ class BookmarksPage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Get.theme.colorScheme.onSurface
-                                    .withOpacity(.5),
+                                color: Get.theme.brightness == Brightness.dark
+                                    ? Get.theme.colorScheme.onSurface
+                                        .withOpacity(.5)
+                                    : Colors.grey[200],
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               child: TextField(
@@ -264,7 +266,7 @@ class BookmarksPage extends StatelessWidget {
                                   hintText: 'Add a comment...',
                                   hintStyle: TextStyle(
                                       color:
-                                      Get.theme.colorScheme.inverseSurface),
+                                          Get.theme.colorScheme.inverseSurface),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   contentPadding: const EdgeInsets.symmetric(

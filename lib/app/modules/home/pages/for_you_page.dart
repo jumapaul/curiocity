@@ -310,8 +310,10 @@ class ForYouPage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Get.theme.colorScheme.onSurface
-                                    .withOpacity(.5),
+                                color: Get.theme.brightness == Brightness.dark
+                                    ? Get.theme.colorScheme.onSurface
+                                        .withOpacity(.5)
+                                    : Colors.grey[200],
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               child: TextField(
