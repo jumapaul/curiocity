@@ -108,7 +108,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
                 bottom: 0,
                 right: 0,
                 child: GestureDetector(
-                  onTap: _showImagePickerOptions,
+                  onTap: showImagePickerOptions,
                   child: const CircleAvatar(
                     radius: 14,
                     backgroundColor: colorPrimary,
@@ -240,30 +240,35 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
     );
   }
 
-  void _showImagePickerOptions() {
-    showModalBottomSheet(
+  void showImagePickerOptions() {
+    showCupertinoModalPopup(
       context: Get.context!,
       builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Photo Library'),
-                onTap: () {
-                  Get.back();
-                  controller.pickImage();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
-                onTap: () {
-                  Get.back();
-                  controller.takePhoto();
-                },
-              ),
-            ],
+        return CupertinoActionSheet(
+          message: const Text(
+            'Select a photo source',
+            style: TextStyle(fontSize: 14),
+          ),
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Get.back();
+                controller.pickImage();
+              },
+              child: const Text('Photo Library'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Get.back();
+                controller.takePhoto();
+              },
+              child: const Text('Camera'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            isDefaultAction: true,
+            onPressed: () => Get.back(),
+            child: const Text('Cancel'),
           ),
         );
       },
