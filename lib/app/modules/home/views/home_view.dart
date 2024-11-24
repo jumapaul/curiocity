@@ -110,7 +110,9 @@ class HomeView extends GetView<HomeController> {
           Icons.notifications,
           color: Colors.blueGrey,
         ),
-        onPressed: () {},
+        onPressed: () {
+          controller.fetchPosts();
+        },
       ),
     );
   }
@@ -220,12 +222,23 @@ class HomeView extends GetView<HomeController> {
                               width: 100,
                               fit: BoxFit.cover, // Add fit property
                             )
-                          : Image.asset(
-                              "assets/images/profile.png",
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover, // Add fit property
-                            ),
+                          : controller.userProfile.value?.data
+                                      ?.profilePictureUrl?.isNotEmpty ==
+                                  true
+                              ? Image.network(
+                                  controller.userProfile.value?.data
+                                          ?.profilePictureUrl ??
+                                      '',
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  "assets/images/profile.png",
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover, // Add fit property
+                                ),
                     ),
                   ),
                   Positioned(
@@ -247,12 +260,12 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
               const SizedBox(height: smallSize),
-              const Text(
-                "John Doe",
+              Text(
+                controller.userProfile.value?.data?.name ?? '',
                 style: AppTextStyles.subHeaderStyle,
               ),
-              const Text(
-                "@John_Doe",
+              Text(
+                controller.userProfile.value?.data?.email ?? '',
               ),
             ],
           ),

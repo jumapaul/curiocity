@@ -26,7 +26,8 @@ class SearchView extends GetView<SearchViewController> {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color:
+                          Get.theme.colorScheme.inverseSurface.withOpacity(.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -47,7 +48,8 @@ class SearchView extends GetView<SearchViewController> {
                           borderSide: BorderSide.none,
                         ),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor: Get.theme.colorScheme.inverseSurface
+                            .withOpacity(.01),
                       ),
                       onChanged: controller.handleSearch,
                       style: const TextStyle(fontSize: 14),
@@ -61,8 +63,9 @@ class SearchView extends GetView<SearchViewController> {
                   width: 100,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(20),
+                    color:
+                        Get.theme.colorScheme.inverseSurface.withOpacity(.15),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
