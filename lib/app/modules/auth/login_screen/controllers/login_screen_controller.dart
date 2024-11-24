@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:curiocity/app/common/utils/constants.dart';
+import 'package:curiocity/app/common/utils/show_message.dart';
 import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:curiocity/app/data/model/sign_in_model.dart';
 import 'package:curiocity/app/data/model/user_model.dart';
@@ -52,14 +53,14 @@ class LoginScreenController extends GetxController {
           Get.toNamed(Routes.USER_CATEGORY_PREFERENCE);
         } else {
           _status.value = RxStatus.error();
-          showToast(responseBody['message']);
+          showMessage(responseBody['message'], MessageType.Error);
         }
       } else {
         _status.value = RxStatus.error();
       }
     } catch (error) {
       _status.value = RxStatus.error();
-      showToast("Network error: ${error.toString()}");
+      showMessage("Unable to connect to internet", MessageType.Error);
     }
 
     return UserModel();

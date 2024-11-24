@@ -5,7 +5,6 @@ import 'package:pinput/pinput.dart';
 
 import '../../../../common/dimens/dimens.dart';
 import '../../../../common/utils/show_toast.dart';
-import '../../../../routes/app_pages.dart';
 import '../controllers/reset_otp_screen_controller.dart';
 
 class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
@@ -13,6 +12,9 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    if (Get.arguments != null) {
+      controller.arguments.value = Get.arguments as Map<dynamic, dynamic>;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Back"),
@@ -34,10 +36,6 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
         padding: const EdgeInsets.symmetric(horizontal: mediumSize),
         child: Obx(
           () {
-            final Map<String, dynamic> arguments =
-                Get.arguments as Map<String, dynamic>;
-
-            final currentEmail = arguments['email'];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -52,11 +50,11 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
                   ),
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 80,
                 ),
-                Text(
-                  "Enter otp sent to $currentEmail",
-                  style: const TextStyle(
+                const Text(
+                  "We sent a verification code to your email",
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: normalSize,
                   ),
@@ -64,7 +62,7 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
                 const SizedBox(
                   height: extraExtraLargeSize,
                 ),
-                _verifyOtpWidget(currentEmail),
+                _verifyOtpWidget(""),
                 const SizedBox(
                   height: mediumSize,
                 ),
@@ -83,7 +81,7 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
                             showToast("Try after ${controller.start.value}");
                           } else {
                             controller.resetTimer();
-                            controller.resendResetOtp(currentEmail);
+                            controller.resendResetOtp();
                           }
                         },
                         child: controller.resetOtpStatus.isLoading
@@ -119,13 +117,15 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
 
   Widget _verifyOtpWidget(String email) {
     final defaultTheme = PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: const TextStyle(color: Colors.black),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: Colors.black)));
+      width: 50,
+      height: 50,
+      textStyle: const TextStyle(color: Colors.black),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.black),
+      ),
+    );
     return Pinput(
       length: 6,
       defaultPinTheme: defaultTheme,
@@ -133,9 +133,7 @@ class ResetOtpScreenView extends GetView<ResetOtpScreenController> {
           decoration: defaultTheme.decoration!
               .copyWith(border: Border.all(color: Colors.orangeAccent))),
       onCompleted: (otp) {
-        Get.toNamed(Routes.RESET_PASSWORD,
-            arguments: {'email': email, 'otp': otp});
-        // controller.verifyEmail(otp);
+        controller.verifyOtp(otp);
       },
     );
   }

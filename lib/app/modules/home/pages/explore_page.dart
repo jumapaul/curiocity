@@ -52,8 +52,9 @@ class ExplorePage extends StatelessWidget {
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.only(left: 16),
-                          child: Column(
+                          child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Start your journey by Posting your First Curio",
@@ -66,7 +67,8 @@ class ExplorePage extends StatelessWidget {
                               AppTextStyles.extraSmallVerticalSpacing,
                               Text(
                                 "Go to start activity to get started",
-                                style: TextStyle(fontSize: 12,color: Colors.black87),
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black87),
                               )
                             ],
                           ),
@@ -105,9 +107,8 @@ class ExplorePage extends StatelessWidget {
                       AppTextStyles.smallVerticalSpacing,
                       Text(
                         "Add Space",
-                        style: Get.textTheme.titleMedium?.copyWith(
-                          color: Colors.black87
-                        ),
+                        style: Get.textTheme.titleMedium
+                            ?.copyWith(color: Colors.black87),
                       )
                     ],
                   ),

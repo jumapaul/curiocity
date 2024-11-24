@@ -19,6 +19,7 @@ abstract class Routes {
   static const RESET_EMAIL_SCREEN = _Paths.RESET_EMAIL_SCREEN;
   static const SEARCH = _Paths.SEARCH;
   static const CREATE_POST = _Paths.CREATE_POST;
+  static const SUCCESS = _Paths.SUCCESS;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const RESET_EMAIL_SCREEN = '/reset-email-screen';
   static const SEARCH = '/search';
   static const CREATE_POST = '/create-post';
+  static const SUCCESS = '/success';
 }

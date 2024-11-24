@@ -32,6 +32,10 @@ class AppTextStyles {
     height: 30,
   );
 
+  static const extraLargeVerticalSpacing = SizedBox(
+    height: 60,
+  );
+
   static const mediumVerticalSpacing = SizedBox(
     height: 16,
   );

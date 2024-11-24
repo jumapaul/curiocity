@@ -23,7 +23,7 @@ class InputTextFieldWidget extends StatefulWidget {
 class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       keyboardType: widget.inputType,
       controller: widget.editingController,
       decoration: InputDecoration(
@@ -40,6 +40,12 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       style: const TextStyle(
         fontSize: 14,
       ),
+      validator: (val) {
+        if (val?.isEmpty == true) {
+          return widget.errorText;
+        }
+        return null;
+      },
     );
   }
 }
@@ -73,7 +79,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       obscureText: !showPassword,
       controller: widget.passwordTextEditController,
       decoration: InputDecoration(
@@ -101,6 +107,12 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       style: const TextStyle(
         fontSize: 14,
       ),
+      validator: (val) {
+        if (val?.isEmpty == true) {
+          return "Please input password";
+        }
+        return null;
+      },
     );
   }
 }

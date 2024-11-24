@@ -29,6 +29,8 @@ import '../modules/search/bindings/search_binding.dart';
 import '../modules/search/views/search_view.dart';
 import '../modules/setting_up_profile/bindings/setting_up_profile_binding.dart';
 import '../modules/setting_up_profile/views/setting_up_profile_view.dart';
+import '../modules/success/bindings/success_binding.dart';
+import '../modules/success/views/success_view.dart';
 
 part 'app_routes.dart';
 
@@ -114,6 +116,11 @@ class AppPages {
       name: _Paths.CREATE_POST,
       page: () => const CreatePostView(),
       binding: CreatePostBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUCCESS,
+      page: () => const SuccessView(),
+      binding: SuccessBinding(),
     ),
   ];
 }

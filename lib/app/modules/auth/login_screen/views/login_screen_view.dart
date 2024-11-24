@@ -26,11 +26,8 @@ class LoginScreenView extends GetView<LoginScreenController> {
               child: Column(
                 children: [
                   const SizedBox(height: extraLargeSize),
-                  Lottie.asset(
-                    'assets/images/logo.json',
-                    backgroundLoading: true,
-                    animate: true
-                  ),
+                  Lottie.asset('assets/images/logo.json',
+                      backgroundLoading: true, animate: true),
                   const SizedBox(height: mediumSize),
                   const Text(
                     "Welcome!",
@@ -69,8 +66,8 @@ class LoginScreenView extends GetView<LoginScreenController> {
                     name: buttonState.isLoading ? null : "Continue",
                     child: buttonState.isLoading
                         ? const SizedBox(
-                            height: 30,
-                            width: 30,
+                            height: 20,
+                            width: 20,
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ),

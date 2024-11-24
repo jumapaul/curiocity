@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:curiocity/app/common/utils/constants.dart';
+import 'package:curiocity/app/common/utils/show_message.dart';
 import 'package:curiocity/app/common/utils/show_toast.dart';
 import 'package:curiocity/app/data/model/sign_up_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,8 @@ class SignUpScreenController extends GetxController {
   Rxn<String>? confirmErrorMessage = Rxn();
   Rxn<String>? passwordErrorMessage = Rxn();
 
+  var isLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -30,6 +33,7 @@ class SignUpScreenController extends GetxController {
 
   signUp() async {
     try {
+      isLoading.value = true;
       var url = Constants.signUpEndPoint;
       Map<String, String> requestHeaders = {'Accept': 'application/json'};
 
@@ -52,16 +56,17 @@ class SignUpScreenController extends GetxController {
             headers: requestHeaders, body: user.toJson());
 
         if (response.statusCode == 200 || response.statusCode == 201) {
-          Get.toNamed(Routes.LOGIN_SCREEN,
-              arguments: emailAddressController.text);
+          Get.offAndToNamed(Routes.SUCCESS, arguments: "Account Created");
         } else {
           String errorMessage =
               jsonDecode(response.body)['message'] ?? "An error occurred";
-          showToast(errorMessage);
+          showMessage(errorMessage, MessageType.Error);
         }
       }
+      isLoading.value = false;
     } catch (error) {
-      showToast("Network error: ${error.toString()}");
+      showMessage("Unable to connect to internet", MessageType.Error);
+      isLoading.value = false;
     }
   }
 

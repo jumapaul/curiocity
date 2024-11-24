@@ -15,8 +15,6 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        print(
-            "=========> password message ${controller.passwordErrorMessage?.value}");
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -88,6 +86,15 @@ class SignUpScreenView extends GetView<SignUpScreenController> {
                         controller.signUp();
                       },
                       name: 'Sign Up',
+                      child: controller.isLoading.value
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : null,
                     ),
                     const SizedBox(height: mediumSize),
                     SignInAndUpRow(
