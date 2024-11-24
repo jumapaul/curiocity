@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 
 class PreferenceNotificationController extends GetxController {
-  //TODO: Implement PreferenceNotificationController
+  var arguments = RxMap<String, dynamic>();
+  final preferences = RxMap<String, bool>({
+    "notification": false,
+    "email": false,
+    "personalize": false,
+  });
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +22,4 @@ class PreferenceNotificationController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

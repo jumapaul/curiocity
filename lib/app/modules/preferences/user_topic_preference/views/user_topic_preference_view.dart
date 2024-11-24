@@ -40,7 +40,10 @@ class UserTopicPreferenceView extends GetView<UserTopicPreferenceController> {
                   if (controller.selectedTopics.length < 3) {
                     showToast("Please select at least 3 topics");
                   } else {
-                    Get.toNamed(Routes.PREFERENCE_NOTIFICATION);
+                    Get.toNamed(
+                      Routes.PREFERENCE_NOTIFICATION,
+                      arguments: controller.getOptions(),
+                    );
                   }
                 },
                 name: "Continue",

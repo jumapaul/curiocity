@@ -1,5 +1,6 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
+import 'package:curiocity/app/data/model/update_user_profile_request.dart';
 import 'package:curiocity/app/modules/auth/login_screen/views/widget/InputTextFieldWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,11 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    if (Get.arguments != null) {
+      controller.arguments.value = Get.arguments as Map<String, dynamic>;
+      print("User--->${Get.arguments}");
+    }
+    print("User--->${controller.user.value?.toJson()}");
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -40,12 +46,6 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
                         labelText: "Name",
                       ),
                       AppTextStyles.mediumVerticalSpacing,
-                      _buildInputField(
-                        hintText: "Type Username",
-                        controller: controller.usernameEditController,
-                        labelText: "Username",
-                      ),
-                      AppTextStyles.mediumVerticalSpacing,
                       _buildPhoneField(),
                       AppTextStyles.extraSmallVerticalSpacing,
                       _buildInputField(
@@ -53,7 +53,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
                         hintText: "Enter Date of Birth",
                         labelText: "Date of birth",
                         isDateField: true,
-                        controller: controller.mobileNumberEditController,
+                        controller: controller.dateOfBirthEditController,
                       ),
                       AppTextStyles.mediumVerticalSpacing,
                       _buildInputField(
@@ -123,12 +123,12 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
             ],
           ),
           const SizedBox(height: smallSize),
-          const Text(
-            "John Doe",
+          Text(
+            controller.user.value?.name ?? '',
             style: AppTextStyles.subHeaderStyle,
           ),
-          const Text(
-            "@John_Doe",
+          Text(
+            controller.user.value?.email ?? '',
           ),
         ],
       ),
@@ -147,7 +147,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
             onTap: () {
               _showDatePicker(Get.context!, controller);
             },
-            child: TextField(
+            child: TextFormField(
               keyboardType: TextInputType.datetime,
               controller: controller,
               decoration: InputDecoration(
@@ -208,8 +208,12 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
     return IntlPhoneField(
       decoration: InputDecoration(
         labelText: 'Phone Number',
-        hintStyle: const TextStyle(fontSize: 14),
-        labelStyle: const TextStyle(fontSize: 14),
+        hintStyle: TextStyle(
+            fontSize: 14,
+            color: Get.theme.colorScheme.inverseSurface.withOpacity(.7)),
+        labelStyle: TextStyle(
+            fontSize: 14,
+            color: Get.theme.colorScheme.inverseSurface.withOpacity(.7)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -223,6 +227,7 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
       ),
       initialCountryCode: 'KE',
       onChanged: (phone) {
+        controller.phoneEditController.text = phone.completeNumber;
         print(phone.completeNumber);
       },
       style: const TextStyle(
@@ -232,11 +237,39 @@ class SettingUpProfileView extends GetView<SettingUpProfileController> {
   }
 
   Widget _buildContinueButton() {
-    return OutlinedButtonWidget(
-      onClick: () {
-        Get.toNamed(Routes.HOME);
-      },
-      name: "Continue",
+    return Obx(
+      () => OutlinedButtonWidget(
+        onClick: () {
+          var request = UpdateUserProfileRequest(
+            email: controller.user.value?.email,
+            name: controller.usernameEditController.text,
+            dateOfBirth: controller.dateOfBirthEditController.text,
+            interests: controller.arguments.value?["categories"].split("#"),
+            subInterests: controller.arguments.value?["topics"].split("#"),
+            pushNotification: controller.arguments.value?['notification'],
+            emailNotification: controller.arguments.value?['email'],
+            personalizedContent: controller.arguments.value?['personalize'],
+            bio: controller.personalBioEditController.text,
+            phone: controller.phoneEditController.text,
+            profileImage: controller.imageUrl.value,
+            address: '',
+            city: '',
+            country: '',
+            location: '',
+          );
+          controller.updateUserProfile(request);
+        },
+        name: "Continue",
+        child: controller.isLoading.value
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : null,
+      ),
     );
   }
 
