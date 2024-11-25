@@ -1,15 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:curiocity/app/data/model/comments_response.dart';
+import 'package:curiocity/app/data/model/posts_response.dart';
 import 'package:curiocity/app/data/model/topics_response.dart';
-import 'package:curiocity/app/data/model/user_model.dart';
+import 'package:curiocity/app/data/model/user_model.dart' as u;
 import 'package:curiocity/app/data/model/user_profile_response.dart';
 import 'package:curiocity/app/data/providers/api_provider.dart';
 import 'package:curiocity/app/data/providers/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
+import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   var selectedIndex = 0.obs;
@@ -19,16 +23,11 @@ class HomeController extends GetxController {
   var topics = Rxn<TopicsResponse>();
   var selectedCategories = RxList<CurioCategory>();
   var isLoading = false.obs;
-  final user = Rxn<User>();
+  final user = Rxn<u.User>();
   final userProfile = Rxn<UserProfileResponse>();
   final ScrollController scrollController = ScrollController();
-
-  // For managing posts and pagination
-  var posts = RxList<Map<String, dynamic>>(); // Store parsed posts
-  bool _isLoadingPosts = false;
-  int _currentPage = 1;
-  final int _limit = 10;
-  bool _hasMorePosts = true;
+  var posts = Rxn<PostsResponse>();
+  var comments = Rxn<CommentsResponse>();
 
   @override
   void onInit() {
@@ -41,7 +40,7 @@ class HomeController extends GetxController {
     getCategory();
     getUser();
     getUserProfile();
-    fetchPosts();
+    getPost();
     super.onReady();
   }
 
@@ -73,41 +72,11 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> fetchPosts() async {
-    if (_isLoadingPosts || !_hasMorePosts) return;
-
-    _isLoadingPosts = true;
-
-    try {
-      final response = await apiProvider.getData<Map<String, dynamic>>(
-        'posts/stream?page=$_currentPage&limit=$_limit',
-        (json) => json,
-      );
-      print(response);
-
-      if (response['success'] == true) {
-        final List<dynamic> newPosts = response['data'];
-        if (newPosts.isNotEmpty) {
-          posts.addAll(newPosts.cast<Map<String, dynamic>>());
-          _currentPage++;
-        } else {
-          _hasMorePosts = false;
-        }
-      } else {
-        Get.snackbar('Error', response['message'] ?? 'Failed to fetch posts');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'An error occurred while fetching posts: $e');
-    } finally {
-      _isLoadingPosts = false;
-    }
-  }
-
   void setupScrollController() {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent * 0.8) {
-        fetchPosts();
+        getPost();
       }
     });
   }
@@ -142,5 +111,46 @@ class HomeController extends GetxController {
     } catch (e) {
       print('Error taking photo: $e');
     }
+  }
+
+  void getPost() {
+    SSEClient.subscribeToSSE(
+        method: SSERequestType.GET,
+        url:
+            'https://dev-api.curiocitie.com/api/v1/posts/stream?page=1&limit=30',
+        header: {
+          "Accept": "text/event-stream",
+          "Cache-Control": "no-cache",
+        }).listen(
+      (event) {
+        try {
+          if (event.data != null || event.data?.isNotEmpty == true) {
+            print('Id: ' + event.id!);
+            print('Event: ' + event.event!);
+            print('Data: ' + event.data!);
+            posts.value = PostsResponse.fromJson(jsonDecode(event.data ?? ''));
+          }
+        } catch (e) {}
+      },
+    );
+  }
+
+  void getComments(String id) {
+    SSEClient.subscribeToSSE(
+        method: SSERequestType.GET,
+        url: 'https://dev-api.curiocitie.com/api/v1/posts/comments/$id',
+        header: {
+          "Accept": "text/event-stream",
+          "Cache-Control": "no-cache",
+        }).listen(
+      (event) {
+        try {
+          if (event.data != null || event.data?.isNotEmpty == true) {
+            comments.value =
+                CommentsResponse.fromJson(jsonDecode(event.data ?? ''));
+          }
+        } catch (e) {}
+      },
+    );
   }
 }

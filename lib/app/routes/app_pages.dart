@@ -38,12 +38,13 @@ class AppPages {
   AppPages._();
   static const on_board = Routes.ON_BOARD_SCREEN;
   static const login = Routes.LOGIN_SCREEN;
+  static const home = Routes.HOME;
 
   static Future<String> getInitialRoute() async {
     final isOnBoarded = await SharedPreferenceHelper.getOnBoardState();
 
     // return isOnBoarded ? login : on_board;
-    return on_board;
+    return home;
   }
 
   static final routes = [

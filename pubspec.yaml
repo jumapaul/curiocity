@@ -28,6 +28,9 @@ dependencies:
   flutter_multi_select_items: ^0.4.3
   multi_select_search: ^0.0.3
   toastification: ^2.3.0
+  flutter_client_sse: ^2.0.3
+  timeago: ^3.7.0
+  parsed_readmore: ^0.0.9
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,14 @@
 import 'package:curiocity/app/common/dimens/dimens.dart';
 import 'package:curiocity/app/common/theme/colors.dart';
+import 'package:curiocity/app/data/model/comments_response.dart';
+import 'package:curiocity/app/data/model/posts_response.dart';
 import 'package:curiocity/app/modules/home/controllers/home_controller.dart';
 import 'package:curiocity/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:parsed_readmore/parsed_readmore.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ForYouPage extends StatelessWidget {
   final HomeController controller;
@@ -20,7 +24,7 @@ class ForYouPage extends StatelessWidget {
           AppTextStyles.mediumVerticalSpacing,
           Container(
             height: 30,
-            margin: const EdgeInsets.only(left: 16),
+            margin: const EdgeInsets.only(left: 10),
             child: Obx(
               () => ListView.builder(
                 itemCount: controller.topics.value?.data?.length ?? 0,
@@ -81,40 +85,43 @@ class ForYouPage extends StatelessWidget {
           ),
           AppTextStyles.mediumVerticalSpacing,
           Expanded(
-            child: ListView.builder(
-              itemCount: 10, // Replace with actual item count
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildUserInfoRow(chipBackgroundColor),
-                      AppTextStyles.smallVerticalSpacing,
-                      const Text(
-                        "Having a great day with my amazing client all the way from New York",
-                      ),
-                      AppTextStyles.smallVerticalSpacing,
-                      Container(
-                        width: Get.width,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                              "assets/images/post.png",
-                            ),
-                          ),
-                        ),
-                      ),
-                      AppTextStyles.mediumVerticalSpacing,
-                      _buildActionRow()
-                    ],
-                  ),
-                );
-              },
+            child: Obx(
+              () => ListView.builder(
+                itemCount: controller.posts.value?.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  var post = controller.posts.value?.data?[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildUserInfoRow(chipBackgroundColor, post),
+                        AppTextStyles.smallVerticalSpacing,
+                        ParsedReadMore(post?.description ?? '-'),
+                        AppTextStyles.smallVerticalSpacing,
+                        post?.postMedias?.isNotEmpty == true
+                            ? Container(
+                                width: Get.width,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      post?.postMedias?.first.url ?? "",
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        AppTextStyles.mediumVerticalSpacing,
+                        _buildActionRow(post)
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -132,29 +139,35 @@ class ForYouPage extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfoRow(Color chipBackgroundColor) {
+  Widget _buildUserInfoRow(Color chipBackgroundColor, Data? post) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            const CircleAvatar(
-              radius: 20,
-            ),
+            post?.user?.profilePictureUrl == null
+                ? const CircleAvatar(
+                    radius: 20,
+                  )
+                : CircleAvatar(
+                    radius: 20,
+                    backgroundImage:
+                        NetworkImage(post?.user?.profilePictureUrl ?? ''),
+                  ),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "John Doe",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  post?.user?.name ?? '',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const Text(
-                  "15 hours ago",
-                  style: TextStyle(fontSize: 12),
+                Text(
+                  timeago.format(DateTime.parse(post?.createdAt ?? '')),
+                  style: const TextStyle(fontSize: 12),
                 ),
                 AppTextStyles.extraSmallVerticalSpacing,
-                _buildCategoryChip(chipBackgroundColor),
+                _buildCategoryChip(chipBackgroundColor, post),
               ],
             ),
           ],
@@ -167,9 +180,12 @@ class ForYouPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryChip(Color backgroundColor) {
+  Widget _buildCategoryChip(Color backgroundColor, Data? post) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      constraints: const BoxConstraints(
+        maxWidth: 120, // Adjust based on your design needs
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.orange,
         border: Border.all(
@@ -178,14 +194,26 @@ class ForYouPage extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(40.0),
       ),
-      child: const Text(
-        "Lifestyle",
-        style: TextStyle(color: Colors.white),
+      child: Text(
+        _truncateText(post?.categories?.firstOrNull ?? "", 15),
+        style: const TextStyle(
+          color: Colors.white,
+          overflow: TextOverflow.ellipsis,
+        ),
+        maxLines: 1,
       ),
     );
   }
 
-  Widget _buildActionRow() {
+  /// Truncates text to a maximum length with ellipsis
+  String _truncateText(String text, int maxLength) {
+    if (text.length > maxLength) {
+      return '${text.substring(0, maxLength)}…';
+    }
+    return text;
+  }
+
+  Widget _buildActionRow(Data? post) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -195,7 +223,7 @@ class ForYouPage extends StatelessWidget {
                 color: Get.theme.colorScheme.inverseSurface.withOpacity(.6)),
             const SizedBox(width: 4),
             Text(
-              "59.6 K",
+              '${post?.upVotes}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Get.theme.colorScheme.inverseSurface.withOpacity(.7),
@@ -204,14 +232,14 @@ class ForYouPage extends StatelessWidget {
           ],
         ),
         GestureDetector(
-          onTap: _showBottomSheet,
+          onTap: () => _showBottomSheet(post?.id ?? ""),
           child: Row(
             children: [
               Icon(Icons.message_outlined,
                   color: Get.theme.colorScheme.inverseSurface.withOpacity(.6)),
               const SizedBox(width: 4),
               Text(
-                "1230",
+                "${post?.comments}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Get.theme.colorScheme.inverseSurface.withOpacity(.7),
@@ -235,7 +263,9 @@ class ForYouPage extends StatelessWidget {
     );
   }
 
-  void _showBottomSheet() {
+  void _showBottomSheet(String id) {
+    controller.comments.value = CommentsResponse();
+    controller.getComments(id);
     showMaterialModalBottomSheet(
       context: Get.context!,
       expand: false,
@@ -246,43 +276,46 @@ class ForYouPage extends StatelessWidget {
             children: [
               AppTextStyles.mediumVerticalSpacing,
               Expanded(
-                child: ListView.builder(
-                  itemCount: 20,
-                  padding: const EdgeInsets.all(0),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: const CircleAvatar(
-                        radius: 20,
-                      ),
-                      title: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Paul Odhiambo",
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
+                child: Obx(
+                  () => ListView.builder(
+                    itemCount: controller.posts.value?.data?.length ?? 0,
+                    padding: const EdgeInsets.all(0),
+                    itemBuilder: (context, index) {
+                      var comment = controller.comments.value?.data?[index];
+                      return ListTile(
+                        leading: const CircleAvatar(
+                          radius: 20,
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              comment?.user?.name ?? '',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "2 days ago",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
+                            const Text(
+                              "2 days ago",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                      subtitle: const Text("This is a test comment"),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border),
-                      ),
-                    );
-                  },
+                            const SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
+                        subtitle: Text(comment?.content ?? ''),
+                        trailing: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.favorite_border),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(

@@ -16,6 +16,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getPost();
     return Scaffold(
       backgroundColor: Get.theme.brightness == Brightness.dark
           ? Get.theme.colorScheme.surface
@@ -38,6 +39,7 @@ class HomeView extends GetView<HomeController> {
           )
         ],
         elevation: 0,
+        centerTitle: true,
       ),
       body: Obx(
         () => IndexedStack(
@@ -77,6 +79,7 @@ class HomeView extends GetView<HomeController> {
             : Colors.white,
         child: Column(
           children: [
+            AppTextStyles.mediumVerticalSpacing,
             _profileView(),
             Expanded(
               child: ListView(
@@ -110,9 +113,7 @@ class HomeView extends GetView<HomeController> {
           Icons.notifications,
           color: Colors.blueGrey,
         ),
-        onPressed: () {
-          controller.fetchPosts();
-        },
+        onPressed: () {},
       ),
     );
   }
