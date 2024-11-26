@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:curiocity/app/common/utils/show_message.dart';
+import 'package:curiocity/app/data/model/bookmark_response.dart';
 import 'package:curiocity/app/data/model/comments_response.dart';
 import 'package:curiocity/app/data/model/posts_response.dart';
 import 'package:curiocity/app/data/model/topics_response.dart';
+import 'package:curiocity/app/data/model/upvote_response.dart';
 import 'package:curiocity/app/data/model/user_model.dart' as u;
 import 'package:curiocity/app/data/model/user_profile_response.dart';
 import 'package:curiocity/app/data/providers/api_provider.dart';
@@ -14,6 +17,7 @@ import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   var selectedIndex = 0.obs;
@@ -152,5 +156,33 @@ class HomeController extends GetxController {
         } catch (e) {}
       },
     );
+  }
+
+  void bookMark(String postId) async {
+    var payload = {"postId": postId};
+    var response = await apiProvider.postData<dynamic>(
+      "posts/bookmarks",
+      jsonEncode(payload),
+      (data) => BookmarkResponse.fromJson(data),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      showMessage("Post bookmarked", MessageType.Success);
+    } else {
+      showMessage(jsonDecode(response.body)["message"], MessageType.Success);
+    }
+  }
+
+  void upVote(String postId) async {
+    var payload = {"postId": postId, "isUpVote": true};
+    var response = await apiProvider.postData<dynamic>(
+      "posts/vote",
+      jsonEncode(payload),
+      (data) => UpvoteResponse.fromJson(data),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      showMessage(response.message, MessageType.Success);
+    } else {
+      showMessage(jsonDecode(response.body)["message"], MessageType.Success);
+    }
   }
 }

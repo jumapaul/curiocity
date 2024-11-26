@@ -219,8 +219,13 @@ class ForYouPage extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.arrow_upward_sharp,
-                color: Get.theme.colorScheme.inverseSurface.withOpacity(.6)),
+            IconButton(
+              onPressed: () => controller.upVote(post?.id ?? ""),
+              icon: Icon(
+                Icons.arrow_upward_sharp,
+                color: Get.theme.colorScheme.inverseSurface.withOpacity(.6),
+              ),
+            ),
             const SizedBox(width: 4),
             Text(
               '${post?.upVotes}',
@@ -250,13 +255,24 @@ class ForYouPage extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(
-              'assets/images/bookmark.png',
-              color: Get.theme.colorScheme.inverseSurface,
+            IconButton(
+              onPressed: () => controller.bookMark(post?.id ?? ''),
+              icon: Image.asset(
+                'assets/images/bookmark.png',
+                color:
+                    post?.bookmarks?.contains(controller.user.value?.id) == true
+                        ? const Color(0xFFFBB80E)
+                        : Get.theme.colorScheme.inverseSurface,
+              ),
             ),
             const SizedBox(width: 4),
-            Icon(Icons.share,
-                color: Get.theme.colorScheme.inverseSurface.withOpacity(.6)),
+            IconButton(
+              onPressed: () => print(""),
+              icon: Icon(
+                Icons.share,
+                color: Get.theme.colorScheme.inverseSurface.withOpacity(.6),
+              ),
+            ),
           ],
         ),
       ],
