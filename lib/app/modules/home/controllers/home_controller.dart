@@ -149,6 +149,7 @@ class HomeController extends GetxController {
         }).listen(
       (event) {
         try {
+          print("Comments=========>${event.data}");
           if (event.data != null || event.data?.isNotEmpty == true) {
             comments.value =
                 CommentsResponse.fromJson(jsonDecode(event.data ?? ''));

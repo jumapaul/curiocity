@@ -43,8 +43,8 @@ class AppPages {
   static Future<String> getInitialRoute() async {
     final isOnBoarded = await SharedPreferenceHelper.getOnBoardState();
 
-    // return isOnBoarded ? login : on_board;
-    return home;
+    return isOnBoarded ? login : on_board;
+    // return home;
   }
 
   static final routes = [

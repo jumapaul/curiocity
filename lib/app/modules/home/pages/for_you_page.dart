@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:parsed_readmore/parsed_readmore.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ForYouPage extends StatelessWidget {
@@ -27,6 +28,7 @@ class ForYouPage extends StatelessWidget {
             margin: const EdgeInsets.only(left: 10),
             child: Obx(
               () => ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 14),
                 itemCount: controller.topics.value?.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   var category = controller.topics.value?.data?[index];
@@ -172,10 +174,33 @@ class ForYouPage extends StatelessWidget {
             ),
           ],
         ),
-        Icon(
-          Icons.more_horiz_outlined,
-          color: Get.theme.colorScheme.inverseSurface.withOpacity(.6),
-        )
+        PopupMenuButton<String>(
+          icon: Icon(
+            Icons.more_horiz_outlined,
+            color: Get.theme.colorScheme.inverseSurface.withOpacity(0.6),
+          ),
+          elevation: 0,
+          onSelected: (value) {
+            // Handle menu item selection
+            switch (value) {
+              case 'Option 1':
+                print('Option 1 selected');
+                break;
+              case 'Option 2':
+                print('Option 2 selected');
+                break;
+              case 'Option 3':
+                print('Option 3 selected');
+                break;
+            }
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'Report',
+              child: Text('Report'),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -237,7 +262,11 @@ class ForYouPage extends StatelessWidget {
           ],
         ),
         GestureDetector(
-          onTap: () => _showBottomSheet(post?.id ?? ""),
+          onTap: () async {
+            controller.comments.value = CommentsResponse();
+            controller.getComments(post?.id ?? "");
+            _showBottomSheet(post?.id ?? "");
+          },
           child: Row(
             children: [
               Icon(Icons.message_outlined,
@@ -267,7 +296,13 @@ class ForYouPage extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             IconButton(
-              onPressed: () => print(""),
+              onPressed: () async {
+                final result = await Share.share(
+                    'Check out post on curio https://dev.curiocitie.com/explore');
+                if (result.status == ShareResultStatus.success) {
+                  print('Thank you for sharing my website!');
+                }
+              },
               icon: Icon(
                 Icons.share,
                 color: Get.theme.colorScheme.inverseSurface.withOpacity(.6),
@@ -280,8 +315,6 @@ class ForYouPage extends StatelessWidget {
   }
 
   void _showBottomSheet(String id) {
-    controller.comments.value = CommentsResponse();
-    controller.getComments(id);
     showMaterialModalBottomSheet(
       context: Get.context!,
       expand: false,
@@ -294,7 +327,7 @@ class ForYouPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => ListView.builder(
-                    itemCount: controller.posts.value?.data?.length ?? 0,
+                    itemCount: controller.comments.value?.data?.length ?? 0,
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (context, index) {
                       var comment = controller.comments.value?.data?[index];
